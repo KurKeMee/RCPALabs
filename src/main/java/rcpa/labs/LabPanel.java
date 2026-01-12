@@ -38,31 +38,28 @@ public class LabPanel extends JPanel implements ActionListener {
 
         if(labMaster.getLab() == LAB1) {
             JTextField text1 = new JTextField();
-            text1.setBounds(110,20, TEXT_WIDTH, TEXT_HEIGHT);
+            text1.setBounds(START_FIELD_POSITION_X,START_FIELD_POSITION_Y, TEXT_WIDTH, TEXT_HEIGHT);
             this.add(text1);
 
             JTextField text2 = new JTextField();
-            text2.setBounds(110, 100, TEXT_WIDTH, TEXT_HEIGHT);
+            text2.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + FIELD_SPACING, TEXT_WIDTH, TEXT_HEIGHT);
             this.add(text2);
 
             JTextField resultText = new JTextField();
-            resultText.setBounds(110, 180, TEXT_WIDTH, TEXT_HEIGHT);
+            resultText.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (2 * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
             this.add(resultText);
 
             JButton button1 = new JButton("Нажать");
-            button1.setBounds(20, 50, BUTTON_WIDTH, BUTTON_HEIGHT);
+            button1.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
             this.add(button1);
 
             JButton button2 = new JButton("Нажать");
-            button2.setBounds(20, 130, BUTTON_WIDTH, BUTTON_HEIGHT);
+            button2.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT);
             this.add(button2);
 
             JButton buttonResult = new JButton("Нажать");
-            buttonResult.setBounds(20, 210, BUTTON_WIDTH, BUTTON_HEIGHT);
+            buttonResult.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + (2 * BUTTON_SPACING), BUTTON_WIDTH, BUTTON_HEIGHT);
             this.add(buttonResult);
-
-
-
         }
     }
 
