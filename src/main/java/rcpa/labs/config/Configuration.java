@@ -6,6 +6,30 @@ public interface Configuration {
     int LAB_WIDTH = 800;
     int LAB_HEIGHT = 600;
 
+    // Текст
+    int TEXT_WIDTH = 110;
+    int TEXT_HEIGHT = 30;
+
+    int START_FIELD_POSITION_X = 110;
+    int START_FIELD_POSITION_Y = 20;
+    int FIELD_SPACING = 80;
+
+    // Кнопки
+    int BUTTON_WIDTH = 200;
+    int BUTTON_HEIGHT = 35;
+
+    int START_BUTTON_POSITION_X = 20;
+    int START_BUTTON_POSITION_Y = 50;
+    int BUTTON_SPACING = 80;
+
+    // Лэйблы
+    int LABEL_WIDTH = 120;
+    int LABEL_HEIGHT = 40;
+
+    int START_LABEL_POSITION_X = 25;
+    int START_LABEL_POSITION_Y = 15;
+    int LABEL_SPACING = 80;
+
     int MILLISECONDS_PER_FRAME = 40;
 
     byte LAB1 = 1;
