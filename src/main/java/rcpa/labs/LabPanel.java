@@ -23,7 +23,6 @@ public class LabPanel extends JPanel implements ActionListener {
      */
     private final LabMaster labMaster;
 
-
     /**
      * Конструктор
      * @param frame - передаваемый параметр окна
@@ -37,29 +36,29 @@ public class LabPanel extends JPanel implements ActionListener {
         frame.setSize(LAB_WIDTH,LAB_HEIGHT);
         frame.setLocationRelativeTo(null);
 
-        if(labMaster.getLab() == LAB1){
+        if(labMaster.getLab() == LAB1) {
             JTextField text1 = new JTextField();
-            text1.setBounds(110,20,110,30);
+            text1.setBounds(110,20, TEXT_WIDTH, TEXT_HEIGHT);
             this.add(text1);
 
             JTextField text2 = new JTextField();
-            text2.setBounds(110, 100, 110, 30);
+            text2.setBounds(110, 100, TEXT_WIDTH, TEXT_HEIGHT);
             this.add(text2);
 
             JTextField resultText = new JTextField();
-            resultText.setBounds(110, 180, 110, 30);
+            resultText.setBounds(110, 180, TEXT_WIDTH, TEXT_HEIGHT);
             this.add(resultText);
 
             JButton button1 = new JButton("Нажать");
-            button1.setBounds(20, 50, 200, 35);
+            button1.setBounds(20, 50, BUTTON_WIDTH, BUTTON_HEIGHT);
             this.add(button1);
 
             JButton button2 = new JButton("Нажать");
-            button2.setBounds(20, 130, 200, 35);
+            button2.setBounds(20, 130, BUTTON_WIDTH, BUTTON_HEIGHT);
             this.add(button2);
 
             JButton buttonResult = new JButton("Нажать");
-            buttonResult.setBounds(20, 210, 200, 35);
+            buttonResult.setBounds(20, 210, BUTTON_WIDTH, BUTTON_HEIGHT);
             this.add(buttonResult);
 
 
