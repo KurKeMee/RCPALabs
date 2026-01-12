@@ -38,9 +38,31 @@ public class LabPanel extends JPanel implements ActionListener {
         frame.setLocationRelativeTo(null);
 
         if(labMaster.getLab() == LAB1){
-            JTextField text = new JTextField("Lab1");
-            text.setBounds(10,10,100,20);
-            this.add(text);
+            JTextField text1 = new JTextField();
+            text1.setBounds(110,20,110,30);
+            this.add(text1);
+
+            JTextField text2 = new JTextField();
+            text2.setBounds(110, 100, 110, 30);
+            this.add(text2);
+
+            JTextField resultText = new JTextField();
+            resultText.setBounds(110, 180, 110, 30);
+            this.add(resultText);
+
+            JButton button1 = new JButton("Нажать");
+            button1.setBounds(20, 50, 200, 35);
+            this.add(button1);
+
+            JButton button2 = new JButton("Нажать");
+            button2.setBounds(20, 130, 200, 35);
+            this.add(button2);
+
+            JButton buttonResult = new JButton("Нажать");
+            buttonResult.setBounds(20, 210, 200, 35);
+            this.add(buttonResult);
+
+
 
         }
     }
