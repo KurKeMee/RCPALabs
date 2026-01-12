@@ -22,6 +22,14 @@ public interface Configuration {
     int START_BUTTON_POSITION_Y = 50;
     int BUTTON_SPACING = 80;
 
+    // Лэйблы
+    int LABEL_WIDTH = 120;
+    int LABEL_HEIGHT = 40;
+
+    int START_LABEL_POSITION_X = 25;
+    int START_LABEL_POSITION_Y = 15;
+    int LABEL_SPACING = 80;
+
     int MILLISECONDS_PER_FRAME = 40;
 
     byte LAB1 = 1;

@@ -37,29 +37,28 @@ public class LabPanel extends JPanel implements ActionListener {
         frame.setLocationRelativeTo(null);
 
         if(labMaster.getLab() == LAB1) {
-            JTextField text1 = new JTextField();
-            text1.setBounds(START_FIELD_POSITION_X,START_FIELD_POSITION_Y, TEXT_WIDTH, TEXT_HEIGHT);
-            this.add(text1);
+            for (int i = 0; i < 3; i++) {
+                JTextField text = new JTextField();
+                text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
+                this.add(text);
 
-            JTextField text2 = new JTextField();
-            text2.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + FIELD_SPACING, TEXT_WIDTH, TEXT_HEIGHT);
-            this.add(text2);
+                JButton button = new JButton("Нажать");
+                button.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + (i * BUTTON_SPACING), BUTTON_WIDTH, BUTTON_HEIGHT);
+                this.add(button);
 
-            JTextField resultText = new JTextField();
-            resultText.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (2 * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
-            this.add(resultText);
-
-            JButton button1 = new JButton("Нажать");
-            button1.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y, BUTTON_WIDTH, BUTTON_HEIGHT);
-            this.add(button1);
-
-            JButton button2 = new JButton("Нажать");
-            button2.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT);
-            this.add(button2);
-
-            JButton buttonResult = new JButton("Нажать");
-            buttonResult.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + (2 * BUTTON_SPACING), BUTTON_WIDTH, BUTTON_HEIGHT);
-            this.add(buttonResult);
+                if (i < 2) {
+                    JLabel label = new JLabel("Значение " + (i + 1) + ":");
+                    label.setFont(new Font("Arial", Font.PLAIN, 15));
+                    label.setBounds(START_LABEL_POSITION_X, START_LABEL_POSITION_Y + (i * LABEL_SPACING), LABEL_WIDTH, LABEL_HEIGHT);
+                    this.add(label);
+                }
+                else {
+                    JLabel resultLabel = new JLabel("Результат:");
+                    resultLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+                    resultLabel.setBounds(START_LABEL_POSITION_X, START_LABEL_POSITION_Y + (i * LABEL_SPACING), LABEL_WIDTH, LABEL_HEIGHT);
+                    this.add(resultLabel);
+                }
+            }
         }
     }
 

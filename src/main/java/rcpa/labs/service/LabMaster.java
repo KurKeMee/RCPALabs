@@ -36,11 +36,11 @@ public class LabMaster {
         if(lab == LAB1){
             //graphics.setColor(Color.WHITE);
             //graphics.fillRect(0, 0, LAB_WIDTH, LAB_HEIGHT);
-            graphics.setFont(new Font("Arial", Font.PLAIN, 15));
+            //graphics.setFont(new Font("Arial", Font.PLAIN, 15));
             graphics.setColor(Color.BLACK);
-            graphics.drawString("Значение 1:", 25, 40);
-            graphics.drawString("Значение 2:", 25, 120);
-            graphics.drawString("Результат:", 25, 200);
+            //graphics.drawString("Значение 1:", 25, 40);
+            //graphics.drawString("Значение 2:", 25, 120);
+            //graphics.drawString("Результат:", 25, 200);
         }
         else if(lab == LAB2){
             graphics.setFont(new Font("Arial", Font.PLAIN, 40));
