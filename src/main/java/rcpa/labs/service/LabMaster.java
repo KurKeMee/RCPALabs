@@ -20,7 +20,7 @@ public class LabMaster {
      *
      * @return LabMaster
      */
-    public static synchronized LabMaster getInstance() {
+    public static synchronized LabMaster getLabMaster() {
         if (instance == null) {
             instance = new LabMaster();
         }

@@ -1,6 +1,8 @@
-package rcpa.labs;
+package rcpa.labs.view;
 
 import rcpa.labs.config.Configuration;
+import rcpa.labs.model.ButtonType;
+import rcpa.labs.repository.ButtonRepository;
 import rcpa.labs.service.LabMaster;
 
 import javax.swing.*;
@@ -22,13 +24,17 @@ public class LabPanel extends JPanel implements ActionListener {
      * @see LabMaster
      */
     private final LabMaster labMaster;
+    private final ButtonRepository buttonRepository;
+
+    public int count=0;
 
     /**
      * Конструктор
      * @param frame - передаваемый параметр окна
      */
     public LabPanel(JFrame frame) {
-        this.labMaster = LabMaster.getInstance();
+        this.labMaster = LabMaster.getLabMaster();
+        this.buttonRepository = ButtonRepository.getButtonRepository();
 
         this.setBounds(0,0, Configuration.LAB_WIDTH, Configuration.LAB_HEIGHT);
         setLayout(null);
@@ -37,14 +43,26 @@ public class LabPanel extends JPanel implements ActionListener {
         frame.setLocationRelativeTo(null);
 
         if(labMaster.getLab() == LAB1) {
+            buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
+                                            START_BUTTON_POSITION_X,
+                                            START_BUTTON_POSITION_Y,
+                                            BUTTON_WIDTH,
+                                            BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
+                                        "С текстом",
+                                        START_BUTTON_POSITION_X,
+                                        START_BUTTON_POSITION_Y+BUTTON_SPACING,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
             for (int i = 0; i < 3; i++) {
-                JTextField text = new JTextField();
+                JTextField text = new JTextField(count);
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
                 this.add(text);
 
-                JButton button = new JButton("Нажать");
-                button.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + (i * BUTTON_SPACING), BUTTON_WIDTH, BUTTON_HEIGHT);
-                this.add(button);
+                //JButton button = new JButton("Нажать");
+                //int count =0;
+                //button.setBounds(START_BUTTON_POSITION_X, START_BUTTON_POSITION_Y + (i * BUTTON_SPACING), BUTTON_WIDTH, BUTTON_HEIGHT);
+                //this.add(button);
 
                 if (i < 2) {
                     JLabel label = new JLabel("Значение " + (i + 1) + ":");
@@ -59,6 +77,8 @@ public class LabPanel extends JPanel implements ActionListener {
                     this.add(resultLabel);
                 }
             }
+
+            buttonRepository.getAllButtons().forEach(this::add);
         }
     }
 

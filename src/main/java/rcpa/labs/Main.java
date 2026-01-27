@@ -1,10 +1,9 @@
 package rcpa.labs;
 
 import rcpa.labs.config.Configuration;
-import rcpa.labs.service.LabMaster;
+import rcpa.labs.view.LabPanel;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
