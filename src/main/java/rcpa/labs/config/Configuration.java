@@ -6,6 +6,10 @@ public interface Configuration {
     int LAB_WIDTH = 800;
     int LAB_HEIGHT = 600;
 
+    // Таблица
+    int ROW_HEIGHT = 30;
+    int INTERCELL_SPACING = 10;
+
     // Текст
     int TEXT_WIDTH = 110;
     int TEXT_HEIGHT = 30;

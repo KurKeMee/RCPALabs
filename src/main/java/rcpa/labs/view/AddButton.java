@@ -1,14 +1,20 @@
 package rcpa.labs.view;
 
+import rcpa.labs.config.Configuration;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
 
-public class AddButton extends JButton {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+
+public class AddButton extends JButton{
 
     private ButtonData data;
 
-    public AddButton(){}
+    public AddButton() {}
 
     public AddButton(ButtonData data) {
         this.data = data;
@@ -17,9 +23,15 @@ public class AddButton extends JButton {
     }
 
     private void addEventListener() {
-        this.addActionListener(e->{
-            data.setLabel(data.getLabel()+'0');
-            this.setText(data.getLabel());
+        this.addActionListener(e -> {
+            ArrayList<JTextField> textFields =
+                    Arrays.stream(data.getParentPanel().getComponents())
+                                                            .filter(comp -> comp instanceof JTextField)
+                                                            .map(tf -> (JTextField) tf)
+                                                            .collect(Collectors.toCollection(ArrayList::new));
+
+            String[] values = textFields.stream().map(tf -> tf.getText()).toArray(String[]::new);
+            data.getLinkedTable().addRow(values);
         });
     }
 
@@ -28,5 +40,4 @@ public class AddButton extends JButton {
         this.setText(data.getLabel());
         addEventListener();
     }
-
 }
