@@ -3,6 +3,7 @@ package rcpa.labs.repository;
 import rcpa.labs.model.ButtonData;
 import rcpa.labs.model.ButtonType;
 import rcpa.labs.view.AddButton;
+import rcpa.labs.view.DeleteButton;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class ButtonRepository {
 
         if(button instanceof AddButton){
             ((AddButton) button).setButtonData(newBD);
+        } else if (button instanceof DeleteButton) {
+            ((DeleteButton) button).setButtonData(newBD);
         }
 
         buttons.put(newBD, button);

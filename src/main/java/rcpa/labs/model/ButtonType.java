@@ -1,12 +1,14 @@
 package rcpa.labs.model;
 
 import rcpa.labs.view.AddButton;
+import rcpa.labs.view.DeleteButton;
 
 import javax.swing.*;
 import java.util.function.Supplier;
 
 public enum ButtonType{
-    ADD_BUTTON (AddButton::new);
+    ADD_BUTTON (AddButton::new),
+    DELETE_BUTTON(DeleteButton::new);
 
     private final Supplier<JButton> supplier;
 

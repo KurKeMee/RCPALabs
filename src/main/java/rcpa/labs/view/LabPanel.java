@@ -44,6 +44,7 @@ public class LabPanel extends JPanel implements ActionListener {
 
         if(labMaster.getLab() == LAB1) {
             buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
+                                            "Добавить",
                                             START_BUTTON_POSITION_X,
                                             START_BUTTON_POSITION_Y,
                                             BUTTON_WIDTH,
@@ -54,6 +55,13 @@ public class LabPanel extends JPanel implements ActionListener {
                                         START_BUTTON_POSITION_Y+BUTTON_SPACING,
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.DELETE_BUTTON,
+                                        "Удалить",
+                                        START_BUTTON_POSITION_X,
+                                     START_FIELD_POSITION_Y + 3*BUTTON_SPACING,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+
             for (int i = 0; i < 3; i++) {
                 JTextField text = new JTextField(count);
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
