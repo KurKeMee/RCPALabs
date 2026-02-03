@@ -58,10 +58,15 @@ public class LabPanel extends JPanel implements ActionListener {
             buttonRepository.addNewButton(ButtonType.DELETE_BUTTON,
                                         "Удалить",
                                         START_BUTTON_POSITION_X,
-                                     START_FIELD_POSITION_Y + 3*BUTTON_SPACING,
+                                     START_BUTTON_POSITION_Y + 3*BUTTON_SPACING,
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
-
+            buttonRepository.addNewButton(ButtonType.CALCULATE_BUTTON,
+                                        "Вычислить",
+                                        START_BUTTON_POSITION_X + 3*BUTTON_SPACING,
+                                        START_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
             for (int i = 0; i < 3; i++) {
                 JTextField text = new JTextField(count);
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);

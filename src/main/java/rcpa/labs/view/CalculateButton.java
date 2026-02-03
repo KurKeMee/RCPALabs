@@ -3,16 +3,14 @@ package rcpa.labs.view;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class DeleteButton extends JButton {
+public class CalculateButton extends JButton {
 
     private ButtonData data;
 
-    public DeleteButton(){};
+    public CalculateButton(){};
 
-    public DeleteButton(ButtonData data) {
+    public CalculateButton(ButtonData data) {
         this.data = data;
         super.setText(data.getLabel());
         addEventListener();
@@ -20,11 +18,7 @@ public class DeleteButton extends JButton {
 
     private void addEventListener() {
         this.addActionListener(e->{
-            Pattern pattern = Pattern.compile(".$");
-            Matcher matcher = pattern.matcher(data.getLabel());
-            String str = matcher.replaceAll("");
-
-            data.setLabel(str);
+            data.setLabel(data.getLabel());
             this.setText(data.getLabel());
         });
     }
