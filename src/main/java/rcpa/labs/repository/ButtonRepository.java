@@ -4,6 +4,8 @@ import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 import rcpa.labs.model.ButtonType;
 import rcpa.labs.view.AddButton;
+import rcpa.labs.view.CalculateButton;
+import rcpa.labs.view.DeleteButton;
 import rcpa.labs.view.IntegrationTable;
 import rcpa.labs.view.LabPanel;
 

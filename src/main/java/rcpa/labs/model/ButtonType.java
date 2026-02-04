@@ -1,6 +1,8 @@
 package rcpa.labs.model;
 
 import rcpa.labs.view.AddButton;
+import rcpa.labs.view.CalculateButton;
+import rcpa.labs.view.DeleteButton;
 
 import javax.swing.*;
 import java.util.function.Supplier;
@@ -12,7 +14,9 @@ import java.util.function.Supplier;
  * Класс типов кнопок
  */
 public enum ButtonType{
-    ADD_BUTTON (AddButton::new);
+    ADD_BUTTON (AddButton::new),
+    DELETE_BUTTON(DeleteButton::new),
+    CALCULATE_BUTTON(CalculateButton::new);
 
     /**
      * Переменная для хранения Supplier {@link Supplier}

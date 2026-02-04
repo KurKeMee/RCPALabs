@@ -73,17 +73,29 @@ public class LabPanel extends JPanel {
                     }, 300, 20));
 
             buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
-                    START_BUTTON_POSITION_X,
-                    START_BUTTON_POSITION_Y,
-                    BUTTON_WIDTH,
-                    BUTTON_HEIGHT);
+                                            "Добавить",
+                                            START_BUTTON_POSITION_X,
+                                            START_BUTTON_POSITION_Y,
+                                            BUTTON_WIDTH,
+                                            BUTTON_HEIGHT);
             buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
-                    "С текстом",
-                    START_BUTTON_POSITION_X,
-                    START_BUTTON_POSITION_Y + BUTTON_SPACING,
-                    BUTTON_WIDTH,
-                    BUTTON_HEIGHT);
-            //TODO: заменить цикл или создать массив текстовых значений для автоматизации
+                                        "С текстом",
+                                        START_BUTTON_POSITION_X,
+                                        START_BUTTON_POSITION_Y+BUTTON_SPACING,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.DELETE_BUTTON,
+                                        "Удалить",
+                                        START_BUTTON_POSITION_X,
+                                     START_BUTTON_POSITION_Y + 3*BUTTON_SPACING,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.CALCULATE_BUTTON,
+                                        "Вычислить",
+                                        START_BUTTON_POSITION_X + 3*BUTTON_SPACING,
+                                        START_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
             for (int i = 0; i < 3; i++) {
                 JTextField text = new JTextField();
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
