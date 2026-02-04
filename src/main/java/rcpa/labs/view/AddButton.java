@@ -1,32 +1,58 @@
 package rcpa.labs.view;
 
+import rcpa.labs.config.Configuration;
+import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
 
-public class AddButton extends JButton {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
-    private ButtonData data;
+/**
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ *
+ * Класс кнопки добавления в таблицу {@link IntegrationTable}
+ * Наследуется от Button {@link Button}
+ */
+public class AddButton extends Button {
 
-    public AddButton(){}
-
-    public AddButton(ButtonData data) {
-        this.data = data;
-        super.setText(data.getLabel());
-        addEventListener();
+    /**
+     * Конструктор AddButton
+     */
+    public AddButton() {
+        super();
     }
 
+
+    /**
+     * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
+     */
     private void addEventListener() {
-        this.addActionListener(e->{
-            data.setLabel(data.getLabel()+'0');
-            this.setText(data.getLabel());
+        this.addActionListener(_ -> {
+            ArrayList<JTextField> textFields =
+                    Arrays.stream(super.getButtonData().getParentPanel().getComponents())
+                                                            .filter(comp -> comp instanceof JTextField)
+                                                            .map(tf -> (JTextField) tf)
+                                                            .collect(Collectors.toCollection(ArrayList::new));
+
+            String[] values = textFields.stream().map(tf -> tf.getText()).toArray(String[]::new);
+            super.getButtonData().getLinkedTable().addRow(values);
         });
     }
 
+
+    /**
+     * Переопределенный метод установки данных кнопки {@link Button#setButtonData(ButtonData)}
+     *
+     * @param data - данные кнопки
+     * @see AddButton#addEventListener()
+     */
+    @Override
     public void setButtonData(ButtonData data) {
-        this.data = data;
-        this.setText(data.getLabel());
+        super.setButtonData(data);
         addEventListener();
     }
-
 }

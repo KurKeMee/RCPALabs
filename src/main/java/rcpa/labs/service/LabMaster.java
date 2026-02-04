@@ -5,20 +5,38 @@ import java.awt.*;
 import static rcpa.labs.config.Configuration.*;
 
 /**
- * @authors Ivan Monin, Kokarev Danila
+ * @author Ivan Monin
+ * @author Danila Kokarev
  *
  * Класс для рендеринга окна
  */
 public class LabMaster {
 
+    /**
+     * Переменная для хранения экземпляра класса LabMaster
+     */
     private static LabMaster instance;
 
+
+    /**
+     * Переменная-состояния программы
+     * Необходима для переключения между лабораторными работами
+     */
     private byte lab=LAB1;
+
+
+    /**
+     * Конструктор объявлен как private для паттерна Singleton
+     *
+     * @see LabMaster#getLabMaster()
+     */
+    private LabMaster(){}
 
     /**
      * Метод для получения единственного экземпляра класса
      *
-     * @return LabMaster
+     * @see LabMaster#LabMaster()
+     * @return LabMaster - возвращает экземпляр класса LabMaster
      */
     public static synchronized LabMaster getLabMaster() {
         if (instance == null) {
@@ -34,21 +52,19 @@ public class LabMaster {
      */
     public void renderFrame(Graphics graphics) {
         if(lab == LAB1){
-            //graphics.setColor(Color.WHITE);
-            //graphics.fillRect(0, 0, LAB_WIDTH, LAB_HEIGHT);
-            //graphics.setFont(new Font("Arial", Font.PLAIN, 15));
-            graphics.setColor(Color.BLACK);
-            //graphics.drawString("Значение 1:", 25, 40);
-            //graphics.drawString("Значение 2:", 25, 120);
-            //graphics.drawString("Результат:", 25, 200);
+            //graphics.setColor(Color.BLACK);
         }
         else if(lab == LAB2){
-            graphics.setFont(new Font("Arial", Font.PLAIN, 40));
+            /*graphics.setFont(new Font("Arial", Font.PLAIN, 40));
             graphics.setColor(Color.BLACK);
-            graphics.drawString("Lab2",100,100);
+            graphics.drawString("Lab2",100,100);*/
         }
     }
 
+    /**
+     * Метод получения текущего состояния программы
+     * @return byte - возвращает номер текущей лабораторной работы
+     */
     public byte getLab(){
         return lab;
     }

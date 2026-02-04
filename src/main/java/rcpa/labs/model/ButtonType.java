@@ -7,18 +7,36 @@ import rcpa.labs.view.DeleteButton;
 import javax.swing.*;
 import java.util.function.Supplier;
 
+/**
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ *
+ * Класс типов кнопок
+ */
 public enum ButtonType{
     ADD_BUTTON (AddButton::new),
     DELETE_BUTTON(DeleteButton::new),
     CALCULATE_BUTTON(CalculateButton::new);
 
-    private final Supplier<JButton> supplier;
+    /**
+     * Переменная для хранения Supplier {@link Supplier}
+     */
+    private final Supplier<Button> supplier;
 
-    ButtonType(Supplier<JButton> supplier) {
+    /**
+     * Конструктор ButtonType
+     *
+     * @param supplier - Supplier
+     */
+    ButtonType(Supplier<Button> supplier) {
         this.supplier = supplier;
     }
 
-    public JButton create(){
+    /**
+     * Метод для создания экземпляра класса определенного типа
+     * @return Button - возвращает объект класса заданного типа
+     */
+    public Button create(){
         return supplier.get();
     }
 }
