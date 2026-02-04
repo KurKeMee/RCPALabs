@@ -10,16 +10,48 @@ import java.util.Arrays;
 
 import static rcpa.labs.config.Configuration.*;
 
+/**
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ *
+ * Класс реализации таблицы интеграции
+ * Наследуется от JScrollPane {@link JScrollPane}
+ */
 public class IntegrationTable extends JScrollPane {
 
+    /**
+     * Переменная для хранения созданной таблицы
+     *
+     * @see JTable
+     */
     private JTable table;
 
+
+    /**
+     * Конструктор IntegrationTable
+     * Переопределяет метод {@link DefaultTableModel#isCellEditable(int,int)} для запрета на редактирование ячеек
+     *
+     * @param columns - массив строк, состоящий из заголовков таблицы
+     * @param x       - расположение таблицы по горизонтали
+     * @param y       - расположение таблицы по вертикали
+     * @see IntegrationTable#initTable(int, int)
+     */
     public IntegrationTable(String[] columns, int x, int y) {
         super(new JTable(new DefaultTableModel(columns, 0)){
             @Override public boolean isCellEditable(int row, int column) {
                 return false;
             }
         });
+        initTable(x,y);
+    }
+
+    /**
+     * Метод инициализации таблицы
+     * @param x - расположение таблицы по горизонтали
+     * @param y - расположение таблицы по вертикали
+     * @see IntegrationTable#IntegrationTable(String[],int,int)
+     */
+    public void initTable(int x, int y) {
         table = (JTable) this.getViewport().getView();
         table.setRowHeight(ROW_HEIGHT);
         table.setIntercellSpacing(new Dimension(INTERCELL_SPACING, INTERCELL_SPACING));
@@ -31,8 +63,12 @@ public class IntegrationTable extends JScrollPane {
         this.setBounds(x,y,300,400);
     }
 
-
-
+    /**
+     * Метод добавления новой строки в таблицу
+     * @param data - входные данные с полей ввода
+     * @see IntegrationTable#integrationResult(double, double, double) - вычисляет значение интеграла
+     * @see DefaultTableModel необходим для добавления новой строки
+     */
     public void addRow(String[] data){
 
         if(this.table.getColumnCount() != data.length+1){
@@ -51,7 +87,13 @@ public class IntegrationTable extends JScrollPane {
         model.addRow(newData);
     }
 
-
+    /**
+     * Метод вычисления интеграла на основе входных данных
+     * @param lowBorder     - нижняя граница интегрирования
+     * @param highBorder    - верхняя граница интегрирования
+     * @param step          - шаг интегрирования
+     * @return String       - результат интегрирования
+     */
     public String integrationResult(double lowBorder, double highBorder, double step) {
         double sum = 0.0;
         double x = lowBorder;
@@ -64,6 +106,10 @@ public class IntegrationTable extends JScrollPane {
         return Double.toString(sum);
     }
 
+    /**
+     * Метод получения таблицы
+     * @return JTable - возвращает таблицу {@link #table}
+     */
     public JTable getTable(){
         return this.table;
     }

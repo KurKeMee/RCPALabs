@@ -11,8 +11,9 @@ import java.awt.*;
 import static rcpa.labs.config.Configuration.*;
 
 /**
- * @authors Ivan Monin, Kokarev Danila
- * <p>
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ *
  * Класс для отрисовки панели на окне
  */
 public class LabPanel extends JPanel {
@@ -23,12 +24,18 @@ public class LabPanel extends JPanel {
      * @see LabMaster
      */
     private final LabMaster labMaster;
-    private final ButtonRepository buttonRepository;
 
-    public int count = 0;
 
     /**
-     * Конструктор
+     * Переменная для хранения экземпляра класса ButtonRepository
+     *
+     * @see ButtonRepository
+     */
+    private final ButtonRepository buttonRepository;
+
+
+    /**
+     * Конструктор с инициализацией элементов на панели
      *
      * @param frame - передаваемый параметр окна
      */
@@ -36,13 +43,28 @@ public class LabPanel extends JPanel {
         this.labMaster = LabMaster.getLabMaster();
         this.buttonRepository = ButtonRepository.getButtonRepository(this);
 
+        initPanel(frame);
+        chooseLab();
+    }
+
+    /**
+     * Метод инициализации панели
+     * @param frame - передаваемый параметр окна
+     */
+    private void initPanel(JFrame frame){
         this.setBounds(0, 0, Configuration.LAB_WIDTH, Configuration.LAB_HEIGHT);
         setLayout(null);
 
         frame.setSize(LAB_WIDTH, LAB_HEIGHT);
         frame.setLocationRelativeTo(null);
+    }
 
-        this.add(new IntegrationTable(
+    /**
+     * Метод выбора лабораторной работы
+     */
+    private void chooseLab(){
+        if (labMaster.getLab() == LAB1) {
+            this.add(new IntegrationTable(
                     new String[]{
                             "↓ гр. интегрирования",
                             "↑ гр. интегрирования",
@@ -50,8 +72,6 @@ public class LabPanel extends JPanel {
                             "Результат"
                     }, 300, 20));
 
-
-        if (labMaster.getLab() == LAB1) {
             buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
                     START_BUTTON_POSITION_X,
                     START_BUTTON_POSITION_Y,
@@ -65,17 +85,16 @@ public class LabPanel extends JPanel {
                     BUTTON_HEIGHT);
             //TODO: заменить цикл или создать массив текстовых значений для автоматизации
             for (int i = 0; i < 3; i++) {
-                JTextField text = new JTextField(count);
+                JTextField text = new JTextField();
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
                 this.add(text);
 
-                if(i==0){
+                if (i == 0) {
                     JLabel label = new JLabel("↓ гр. интегрирования :");
                     label.setFont(new Font("Arial", Font.PLAIN, 15));
                     label.setBounds(START_LABEL_POSITION_X, START_LABEL_POSITION_Y, LABEL_WIDTH, LABEL_HEIGHT);
                     this.add(label);
-                }
-                else if (i == 1) {
+                } else if (i == 1) {
                     JLabel label = new JLabel("↑ гр. интегрирования :");
                     label.setFont(new Font("Arial", Font.PLAIN, 15));
                     label.setBounds(START_LABEL_POSITION_X, START_LABEL_POSITION_Y + (i * LABEL_SPACING), LABEL_WIDTH, LABEL_HEIGHT);
@@ -87,11 +106,15 @@ public class LabPanel extends JPanel {
                     this.add(resultLabel);
                 }
             }
-
-            buttonRepository.getAllButtons().forEach(this::add);
         }
+
+        buttonRepository.getAllButtons().forEach(this::add);
     }
 
+    /**
+     * Метод для отрисовки панели
+     * @param g - the Graphics context in which to paint
+     */
     @Override
     public void paint(Graphics g) {
         super.paint(g);
