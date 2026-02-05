@@ -1,31 +1,45 @@
 package rcpa.labs.view;
 
+import rcpa.labs.config.Configuration;
+import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
 
-public class CalculateButton extends JButton {
+/**
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ *
+ * Класс кнопки вычисления
+ * Наследуется от Button {@link Button}
+ */
+public class CalculateButton extends Button {
 
-    private ButtonData data;
+    /**
+     * Конструктор CalculateButton
+     */
+    public CalculateButton() { super(); }
 
-    public CalculateButton(){};
 
-    public CalculateButton(ButtonData data) {
-        this.data = data;
-        super.setText(data.getLabel());
-        addEventListener();
-    }
-
+    /**
+     * Метод назначения действия кнопки
+     */
     private void addEventListener() {
         this.addActionListener(e->{
-            data.setLabel(data.getLabel());
-            this.setText(data.getLabel());
+            getButtonData().setLabel(getButtonData().getLabel());
+            this.setText(getButtonData().getLabel());
         });
     }
 
+    /**
+     * Переопределенный метод установки данных кнопки {@link Button#setButtonData(ButtonData)}
+     *
+     * @param data - данные кнопки
+     * @see CalculateButton#addEventListener()
+     */
+    @Override
     public void setButtonData(ButtonData data) {
-        this.data = data;
-        this.setText(data.getLabel());
+        super.setButtonData(data);
         addEventListener();
     }
 }

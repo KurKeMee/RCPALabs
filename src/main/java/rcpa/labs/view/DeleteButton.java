@@ -1,37 +1,51 @@
 package rcpa.labs.view;
 
+import rcpa.labs.config.Configuration;
+import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DeleteButton extends JButton {
+/**
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ *
+ * Класс кнопки вычисления
+ * Наследуется от Button {@link Button}
+ */
+public class DeleteButton extends Button {
 
-    private ButtonData data;
+    /**
+     * Конструктор DeleteButton
+     */
+    public DeleteButton(){ super(); }
 
-    public DeleteButton(){};
 
-    public DeleteButton(ButtonData data) {
-        this.data = data;
-        super.setText(data.getLabel());
-        addEventListener();
-    }
-
+    /**
+     * Метод назначения действия кнопки
+     */
     private void addEventListener() {
         this.addActionListener(e->{
             Pattern pattern = Pattern.compile(".$");
-            Matcher matcher = pattern.matcher(data.getLabel());
+            Matcher matcher = pattern.matcher(getButtonData().getLabel());
             String str = matcher.replaceAll("");
 
-            data.setLabel(str);
-            this.setText(data.getLabel());
+            getButtonData().setLabel(str);
+            this.setText(getButtonData().getLabel());
         });
     }
 
+    /**
+     * Переопределенный метод установки данных кнопки {@link Button#setButtonData(ButtonData)}
+     *
+     * @param data - данные кнопки
+     * @see DeleteButton#addEventListener()
+     */
+    @Override
     public void setButtonData(ButtonData data) {
-        this.data = data;
-        this.setText(data.getLabel());
+        super.setButtonData(data);
         addEventListener();
     }
 }
