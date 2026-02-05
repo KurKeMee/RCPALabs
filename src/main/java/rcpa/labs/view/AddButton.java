@@ -1,11 +1,12 @@
 package rcpa.labs.view;
 
-import rcpa.labs.config.Configuration;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
+import javax.swing.border.AbstractBorder;
 import javax.swing.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -24,6 +25,9 @@ public class AddButton extends Button {
      */
     public AddButton() {
         super();
+        this.setFont(new Font("Arial", Font.BOLD, 14));
+        this.setForeground(Color.BLACK);
+        this.setBackground(new Color(255,244,79));
     }
 
 
@@ -36,12 +40,14 @@ public class AddButton extends Button {
         this.addActionListener(_ -> {
             ArrayList<JTextField> textFields =
                     Arrays.stream(super.getButtonData().getParentPanel().getComponents())
-                                                            .filter(comp -> comp instanceof JTextField)
-                                                            .map(tf -> (JTextField) tf)
-                                                            .collect(Collectors.toCollection(ArrayList::new));
+                            .filter(comp -> comp instanceof JTextField)
+                            .map(tf -> (JTextField) tf)
+                            .collect(Collectors.toCollection(ArrayList::new));
 
             String[] values = textFields.stream().map(tf -> tf.getText()).toArray(String[]::new);
-            super.getButtonData().getLinkedTable().addRow(values);
+            if (Arrays.stream(values).toList().stream().noneMatch(String::isEmpty)) {
+                super.getButtonData().getLinkedTable().addRow(values);
+            }
         });
     }
 

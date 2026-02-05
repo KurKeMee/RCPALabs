@@ -44,6 +44,23 @@ public class ButtonData {
 
 
     /**
+     * Переменная для хранения координаты x
+     */
+    private int x=-1;
+
+
+    /**
+     * Переменная для хранения координаты y
+     */
+    private int y=-1;
+
+
+    /**
+     * Видимость кнопки
+     */
+    private boolean visible;
+
+    /**
      * Конструктор ButtonData
      * @param id            - идентификатор кнопки
      * @param label         - текст кнопки
@@ -99,5 +116,53 @@ public class ButtonData {
      */
     public IntegrationTable getLinkedTable() {
         return linkedTable;
+    }
+
+    /**
+     * Метод для получения координаты X
+     * @return int - возвращает координату x {@link #x}
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * Метод для получения координаты y
+     * @return int - возвращает координату y {@link #y}
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * Метод для установки значения координаты x
+     * @param x - параметр координаты x {@link #x}
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * Метод для установки значения координаты y
+     * @param y - параметр координаты y {@link #y}
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * Метод для получения информации о видимости кнопки
+     * @return boolean - возвращется текущая видимость кнопки {@link #visible}
+     */
+    public boolean isButtonVisible() {
+        return visible;
+    }
+
+    /**
+     * Метод для установки видимости кнопки
+     * @param visible - параметр видимости кнопки {@link #visible}
+     */
+    public void setButtonVisible(boolean visible) {
+        this.visible = visible;
     }
 }

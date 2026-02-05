@@ -5,6 +5,7 @@ import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,12 @@ public class DeleteButton extends Button {
     /**
      * Конструктор DeleteButton
      */
-    public DeleteButton(){ super(); }
+    public DeleteButton(){
+        super();
+        this.setFont(new Font("Arial", Font.BOLD, 14));
+        this.setForeground(Color.BLACK);
+        this.setBackground(new Color(255,179,0));
+    }
 
 
     /**
@@ -31,7 +37,9 @@ public class DeleteButton extends Button {
     private void addEventListener() {
         this.addActionListener(e->{
            int rowId = getButtonData().getLinkedTable().getTableSelectedRow();
-            getButtonData().getLinkedTable().deleteRow(rowId);
+           if(rowId != -1) {
+               getButtonData().getLinkedTable().deleteRow(rowId);
+           }
         });
     }
 

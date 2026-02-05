@@ -5,6 +5,7 @@ import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Ivan Monin
@@ -18,7 +19,12 @@ public class CalculateButton extends Button {
     /**
      * Конструктор CalculateButton
      */
-    public CalculateButton() { super(); }
+    public CalculateButton() {
+        super();
+        this.setFont(new Font("Arial", Font.BOLD, 14));
+        this.setForeground(Color.BLACK);
+        this.setBackground(new Color(250,210,1));
+    }
 
 
     /**
@@ -28,7 +34,9 @@ public class CalculateButton extends Button {
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            getButtonData().getLinkedTable().countResult();
+            if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
+                getButtonData().getLinkedTable().countResult();
+            }
         });
     }
 

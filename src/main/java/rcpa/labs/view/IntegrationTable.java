@@ -1,12 +1,18 @@
 package rcpa.labs.view;
 
 import rcpa.labs.config.Configuration;
+import rcpa.labs.model.ButtonData;
+import rcpa.labs.repository.ButtonRepository;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static rcpa.labs.config.Configuration.*;
 
@@ -36,31 +42,103 @@ public class IntegrationTable extends JScrollPane {
      * @param y       - расположение таблицы по вертикали
      * @see IntegrationTable#initTable(int, int)
      */
-    public IntegrationTable(String[] columns, int x, int y) {
-        super(new JTable(new DefaultTableModel(columns, 0)){
-            @Override public boolean isCellEditable(int row, int column) {
+    public IntegrationTable(String[] columns, int x, int y, JPanel parentPanel) {
+        super(createTable(columns));
+        initTable(x,y, parentPanel);
+    }
+
+    /**
+     * Метод создания таблицы
+     * Переопределяется метод {@link JTable#prepareRenderer(TableCellRenderer,int,int) для раскрашивания строк
+     * с чередованием
+     * Переопределяется метод {@link JTable#isCellEditable(int, int)}
+     * @param columns - заголовки таблицы
+     * @return JTable - возвращается таблица
+     */
+    private static JTable createTable(String[] columns) {
+        return new JTable(new DefaultTableModel(columns, 0)) {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component c = super.prepareRenderer(renderer, row, column);
+
+                if (c instanceof JComponent) {
+                    ((JComponent) c).setOpaque(true);
+                }
+
+                if (!isRowSelected(row)) {
+                    if (row % 2 == 0) {
+                        c.setBackground(new Color(255,207,72));
+                    } else {
+                        c.setBackground(new Color(255,219,88));
+                    }
+                } else {
+                    c.setBackground(new Color(255,186,0));
+                    c.setForeground(Color.BLACK);
+                }
+
+                ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
+
+                return c;
+            }
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
-        });
-        initTable(x,y);
+        };
     }
 
     /**
      * Метод инициализации таблицы
      * @param x - расположение таблицы по горизонтали
      * @param y - расположение таблицы по вертикали
-     * @see IntegrationTable#IntegrationTable(String[],int,int)
+     * @see IntegrationTable#IntegrationTable(String[],int,int, JPanel)
      */
-    public void initTable(int x, int y) {
+    private void initTable(int x, int y, JPanel parentPanel) {
         table = (JTable) this.getViewport().getView();
         table.setRowHeight(ROW_HEIGHT);
-        table.setIntercellSpacing(new Dimension(INTERCELL_SPACING, INTERCELL_SPACING));
         table.setGridColor(Color.BLACK);
         table.setShowVerticalLines(false);
+        table.setShowHorizontalLines(false);
         table.setCellSelectionEnabled(false);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
-        this.setBounds(x,y,300,400);
+        this.setBounds(x,y,400,400);
+        table.setBackground(new Color(205,164,52));
+
+        table.setFont(new Font("Arial", Font.PLAIN, 14));
+        table.setForeground(Color.DARK_GRAY);
+
+        table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        table.getTableHeader().setBackground(new Color(244,169,0));
+        table.getTableHeader().setForeground(Color.BLACK);
+
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if(table.getSelectedRow() > -1) {
+                Arrays.stream(parentPanel.getComponents())
+                        .filter(comp -> comp instanceof DeleteButton || comp instanceof CalculateButton)
+                        .forEach(comp -> {
+                            if (comp instanceof CalculateButton) {
+                                ((CalculateButton) comp).buttonVisible(true);
+                            }
+                            if (comp instanceof DeleteButton) {
+                                ((DeleteButton) comp).buttonVisible(true);
+                            }
+                        });
+            }
+            else{
+                Arrays.stream(parentPanel.getComponents())
+                        .filter(comp -> comp instanceof DeleteButton || comp instanceof CalculateButton)
+                        .forEach(comp -> {
+                            if (comp instanceof CalculateButton) {
+                                ((CalculateButton) comp).buttonVisible(false);
+                            }
+                            if (comp instanceof DeleteButton) {
+                                ((DeleteButton) comp).buttonVisible(false);
+                            }
+                        });
+            }
+        });
     }
 
     /**
@@ -75,6 +153,19 @@ public class IntegrationTable extends JScrollPane {
             System.out.println(this.table.getColumnCount());
             return;
         }
+
+        try {
+            double bottomBorder = Double.parseDouble(data[0]);
+            double topBorder = Double.parseDouble(data[1]);
+            double stepIntegration = Double.parseDouble(data[2]);
+            if(bottomBorder>=topBorder || stepIntegration==0){
+                return;
+            }
+        }
+        catch (NumberFormatException e) {
+            return;
+        }
+
 
         String[] newData = Arrays.copyOf(data, data.length+1);
 
