@@ -112,6 +112,7 @@ public class IntegrationTable extends JScrollPane {
         table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         table.getTableHeader().setBackground(new Color(244,169,0));
         table.getTableHeader().setForeground(Color.BLACK);
+        table.getTableHeader().setReorderingAllowed(false);
 
         table.getSelectionModel().addListSelectionListener(e -> {
             if(table.getSelectedRow() > -1) {
