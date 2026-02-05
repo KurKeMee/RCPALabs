@@ -10,11 +10,11 @@ public interface Configuration {
     int ROW_HEIGHT = 30;
     int INTERCELL_SPACING = 10;
 
-    // Текст
+    // Поля для ввода
     int TEXT_WIDTH = 110;
     int TEXT_HEIGHT = 30;
 
-    int START_FIELD_POSITION_X = 25;
+    int START_FIELD_POSITION_X = 50;
     int START_FIELD_POSITION_Y = 50;
     int FIELD_SPACING = 80;
 
@@ -22,18 +22,18 @@ public interface Configuration {
     int BUTTON_WIDTH = 150;
     int BUTTON_HEIGHT = 30;
 
-    int ADD_BUTTON_POSITION_X = 20;
-    int ADD_BUTTON_POSITION_Y = 300;
+    int ADD_BUTTON_POSITION_X = 30;
+    int ADD_BUTTON_POSITION_Y = 270;
     int CALCULATE_BUTTON_POSITION_X = 330;
     int CALCULATE_BUTTON_POSITION_Y = 450;
     int DELETE_BUTTON_POSITION_X = 530;
     int DELETE_BUTTON_POSITION_Y = 450;
 
     // Лэйблы
-    int LABEL_WIDTH = 120;
+    int LABEL_WIDTH = 200;
     int LABEL_HEIGHT = 40;
 
-    int START_LABEL_POSITION_X = 25;
+    int START_LABEL_POSITION_X = 30;
     int START_LABEL_POSITION_Y = 15;
     int LABEL_SPACING = 80;
 
