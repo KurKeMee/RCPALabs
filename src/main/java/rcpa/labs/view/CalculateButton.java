@@ -5,6 +5,7 @@ import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Ivan Monin
@@ -18,16 +19,24 @@ public class CalculateButton extends Button {
     /**
      * Конструктор CalculateButton
      */
-    public CalculateButton() { super(); }
+    public CalculateButton() {
+        super();
+        this.setFont(new Font("Arial", Font.BOLD, 14));
+        this.setForeground(Color.BLACK);
+        this.setBackground(new Color(250,210,1));
+    }
 
 
     /**
-     * Метод назначения действия кнопки
+     * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
+     * При нажатии происходит вычисление результата интегрирования в выбранной строке
+     * @see IntegrationTable#countResult()
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            getButtonData().setLabel(getButtonData().getLabel());
-            this.setText(getButtonData().getLabel());
+            if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
+                getButtonData().getLinkedTable().countResult();
+            }
         });
     }
 

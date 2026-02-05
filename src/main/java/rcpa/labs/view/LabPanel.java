@@ -60,7 +60,7 @@ public class LabPanel extends JPanel {
     }
 
     /**
-     * Метод выбора лабораторной работы
+     * Метод выбора лабораторной работы и добавления компонентов на панель
      */
     private void chooseLab(){
         if (labMaster.getLab() == LAB1) {
@@ -70,30 +70,24 @@ public class LabPanel extends JPanel {
                             "↑ гр. интегрирования",
                             "Шаг интегрирования",
                             "Результат"
-                    }, 300, 20));
+                    }, 300, 20,this));
 
             buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
                                             "Добавить",
-                                            START_BUTTON_POSITION_X,
-                                            START_BUTTON_POSITION_Y,
+                                            ADD_BUTTON_POSITION_X,
+                                            ADD_BUTTON_POSITION_Y,
                                             BUTTON_WIDTH,
                                             BUTTON_HEIGHT);
-            buttonRepository.addNewButton(ButtonType.ADD_BUTTON,
-                                        "С текстом",
-                                        START_BUTTON_POSITION_X,
-                                        START_BUTTON_POSITION_Y+BUTTON_SPACING,
-                                        BUTTON_WIDTH,
-                                        BUTTON_HEIGHT);
             buttonRepository.addNewButton(ButtonType.DELETE_BUTTON,
                                         "Удалить",
-                                        START_BUTTON_POSITION_X,
-                                     START_BUTTON_POSITION_Y + 3*BUTTON_SPACING,
+                                        DELETE_BUTTON_POSITION_X,
+                                        DELETE_BUTTON_POSITION_Y,
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
             buttonRepository.addNewButton(ButtonType.CALCULATE_BUTTON,
                                         "Вычислить",
-                                        START_BUTTON_POSITION_X + 3*BUTTON_SPACING,
-                                        START_BUTTON_POSITION_Y,
+                                        CALCULATE_BUTTON_POSITION_X,
+                                        CALCULATE_BUTTON_POSITION_Y,
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
             for (int i = 0; i < 3; i++) {
