@@ -22,12 +22,13 @@ public class CalculateButton extends Button {
 
 
     /**
-     * Метод назначения действия кнопки
+     * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
+     * При нажатии происходит вычисление результата интегрирования в выбранной строке
+     * @see IntegrationTable#countResult()
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            getButtonData().setLabel(getButtonData().getLabel());
-            this.setText(getButtonData().getLabel());
+            getButtonData().getLinkedTable().countResult();
         });
     }
 

@@ -24,16 +24,14 @@ public class DeleteButton extends Button {
 
 
     /**
-     * Метод назначения действия кнопки
+     * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
+     * При нажатии происходит удаление выбранной строки
+     * @see IntegrationTable#deleteRow(int)
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            Pattern pattern = Pattern.compile(".$");
-            Matcher matcher = pattern.matcher(getButtonData().getLabel());
-            String str = matcher.replaceAll("");
-
-            getButtonData().setLabel(str);
-            this.setText(getButtonData().getLabel());
+           int rowId = getButtonData().getLinkedTable().getTableSelectedRow();
+            getButtonData().getLinkedTable().deleteRow(rowId);
         });
     }
 

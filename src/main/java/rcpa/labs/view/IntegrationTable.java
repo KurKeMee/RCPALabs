@@ -58,7 +58,7 @@ public class IntegrationTable extends JScrollPane {
         table.setGridColor(Color.BLACK);
         table.setShowVerticalLines(false);
         table.setCellSelectionEnabled(false);
-        table.setRowSelectionAllowed(false);
+        table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
         this.setBounds(x,y,300,400);
     }
@@ -70,7 +70,6 @@ public class IntegrationTable extends JScrollPane {
      * @see DefaultTableModel необходим для добавления новой строки
      */
     public void addRow(String[] data){
-
         if(this.table.getColumnCount() != data.length+1){
             //TODO: добавить исключение, если кол-во данных != кол-во столбцов
             System.out.println(this.table.getColumnCount());
@@ -79,12 +78,34 @@ public class IntegrationTable extends JScrollPane {
 
         String[] newData = Arrays.copyOf(data, data.length+1);
 
-        newData[newData.length-1] = integrationResult(Double.parseDouble(newData[0]),
-                                                      Double.parseDouble(newData[1]),
-                                                      Double.parseDouble(newData[2]));
+        newData[newData.length-1] ="";
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(newData);
+    }
+
+    /**
+     * Метод подсчета результата интегрирования
+     * Использует данные выбранной строки {@link IntegrationTable#getTableSelectedRow()}
+     */
+    public void countResult(){
+        int selectedRow = getTableSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
+        double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
+        double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+
+        model.setValueAt(integrationResult(bottomBorder,topBorder,stepIntegration),selectedRow,3);
+    }
+
+    /**
+     * Метод удаления выбранной строки
+     * @param id - передаваемый параметр id строки
+     */
+    public void deleteRow(int id){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.removeRow(id);
     }
 
     /**
@@ -105,6 +126,12 @@ public class IntegrationTable extends JScrollPane {
         System.out.println(sum);
         return Double.toString(sum);
     }
+
+    /**
+     * Метод получения id выбранной строки
+     * @return int - возвращает id строки
+     */
+    public int getTableSelectedRow(){return table.getSelectedRow();}
 
     /**
      * Метод получения таблицы

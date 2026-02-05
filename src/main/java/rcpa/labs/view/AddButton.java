@@ -29,6 +29,8 @@ public class AddButton extends Button {
 
     /**
      * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
+     * При нажатии кнопки берутся значения полей и передаются в IntegrationTable для добавления новой строки
+     * @see IntegrationTable#addRow(String[]) 
      */
     private void addEventListener() {
         this.addActionListener(_ -> {
