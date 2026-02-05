@@ -2,6 +2,9 @@ package rcpa.labs.model;
 
 import javax.swing.*;
 
+import static rcpa.labs.config.Configuration.BUTTON_HEIGHT;
+import static rcpa.labs.config.Configuration.BUTTON_WIDTH;
+
 /**
  * @author Ivan Monin
  * @author Danila Kokarev
@@ -32,6 +35,9 @@ public class Button extends JButton {
     public void setButtonData(ButtonData data) {
         this.data = data;
         this.setText(data.getLabel());
+        if(data.getX()!=-1 && data.getY()!=-1){
+            this.setBounds(data.getX(),data.getY(),BUTTON_WIDTH,BUTTON_HEIGHT);
+        }
     }
 
     /**
@@ -40,5 +46,20 @@ public class Button extends JButton {
      */
     public ButtonData getButtonData() {
         return data;
+    }
+
+    /**
+     * Метод для изменения отображения кнопки
+     * @param visible - параметр для смены отображения
+     */
+    public void buttonVisible(boolean visible){
+        if(visible){
+            data.setButtonVisible(true);
+            this.setVisible(true);
+        }
+        else{
+            data.setButtonVisible(false);
+            this.setVisible(false);
+        }
     }
 }

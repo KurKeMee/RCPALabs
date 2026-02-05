@@ -51,6 +51,8 @@ public class LabMaster {
      * @param graphics - графика передаваемая с панели
      */
     public void renderFrame(Graphics graphics) {
+        graphics.setColor(new Color(240,230,140));
+        graphics.fillRect(0,0,LAB_WIDTH,LAB_HEIGHT);
         if(lab == LAB1){
             //graphics.setColor(Color.BLACK);
         }
