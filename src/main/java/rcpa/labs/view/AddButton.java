@@ -2,6 +2,7 @@ package rcpa.labs.view;
 
 import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
+import rcpa.labs.service.LabMaster;
 
 import javax.swing.border.AbstractBorder;
 import javax.swing.*;

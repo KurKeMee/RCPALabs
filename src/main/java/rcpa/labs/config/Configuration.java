@@ -37,6 +37,12 @@ public interface Configuration {
     int START_LABEL_POSITION_Y = 15;
     int LABEL_SPACING = 80;
 
+    // Прямоугольник с ошибками
+    int RECT_X = 20;
+    int RECT_Y = 400;
+    int RECT_WIDTH = 200;
+    int RECT_HEIGHT = 100;
+
     int MILLISECONDS_PER_FRAME = 40;
 
     byte LAB1 = 1;
