@@ -128,8 +128,8 @@ public class LabPanel extends JPanel {
      * @param g - the Graphics context in which to paint
      */
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         labMaster.renderFrame(g);
     }
 }

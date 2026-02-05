@@ -3,6 +3,7 @@ package rcpa.labs.view;
 import rcpa.labs.config.Configuration;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
+import rcpa.labs.service.LabMaster;
 
 import javax.swing.*;
 import java.util.regex.Matcher;
@@ -34,6 +35,7 @@ public class DeleteButton extends Button {
 
             getButtonData().setLabel(str);
             this.setText(getButtonData().getLabel());
+            LabMaster.getLabMaster().showSuccess("Символ удален!");
         });
     }
 
