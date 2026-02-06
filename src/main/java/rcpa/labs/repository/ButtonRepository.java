@@ -3,11 +3,7 @@ package rcpa.labs.repository;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
 import rcpa.labs.model.ButtonType;
-import rcpa.labs.view.AddButton;
-import rcpa.labs.view.CalculateButton;
-import rcpa.labs.view.DeleteButton;
-import rcpa.labs.view.IntegrationTable;
-import rcpa.labs.view.LabPanel;
+import rcpa.labs.view.*;
 
 import javax.swing.*;
 import java.util.*;
@@ -156,7 +152,9 @@ public class ButtonRepository {
         Button button = type.create();
 
         button.setButtonData(newBD);
-        if(button instanceof DeleteButton || button instanceof CalculateButton) {
+        if(button instanceof DeleteButton ||
+                button instanceof CalculateButton ||
+                button instanceof CalculateTrapButton) {
             button.buttonVisible(false);
         }
         buttons.add(button);

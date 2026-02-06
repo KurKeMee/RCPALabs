@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
  * Класс кнопки добавления в таблицу {@link IntegrationTable}
  * Наследуется от Button {@link Button}
  */
-public class AddButton extends Button {
+public class CalculateTrapButton extends Button {
 
     /**
-     * Конструктор AddButton
+     * Конструктор CalculateTrapButton
      */
-    public AddButton() {
+    public CalculateTrapButton() {
         super();
         this.setFont(new Font("Arial", Font.BOLD, 14));
         this.setForeground(Color.BLACK);
@@ -39,35 +39,22 @@ public class AddButton extends Button {
      * @see IntegrationTable#addRow(String[],LabPanel)
      */
     private void addEventListener() {
-        this.addActionListener(_ -> {
-            ArrayList<JTextField> textFields =
-                    Arrays.stream(super.getButtonData().getParentPanel().getComponents())
-                            .filter(comp -> comp instanceof JTextField)
-                            .map(tf -> (JTextField) tf)
-                            .collect(Collectors.toCollection(ArrayList::new));
-
-            String[] values = textFields.stream().map(tf -> tf.getText()).toArray(String[]::new);
-            if (Arrays.stream(values).toList().stream().allMatch(String::isEmpty)) {
-                getButtonData().getParentPanel().isFieldEmpty();
-            } else if (values[0].isEmpty()) {
-                getButtonData().getParentPanel().isBottomBorderEmpty();
-            } else if (values[1].isEmpty()) {
-                getButtonData().getParentPanel().isTopBorderEmpty();
-            } else if (values[2].isEmpty()) {
-                getButtonData().getParentPanel().isStepFieldEmpty();
-            } else {
-                super.getButtonData().getLinkedTable().addRow(values, getButtonData().getParentPanel());
-                getButtonData().getParentPanel().isAddNewRowSuccess();
+        this.addActionListener(e->{
+            if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
+                getButtonData().getLinkedTable().countResult(true);
+                getButtonData().getParentPanel().isCalculateRowSuccess();
+            }
+            else{
+                getButtonData().getParentPanel().isRowNoSelected();
             }
         });
     }
-
 
     /**
      * Переопределенный метод установки данных кнопки {@link Button#setButtonData(ButtonData)}
      *
      * @param data - данные кнопки
-     * @see AddButton#addEventListener()
+     * @see CalculateTrapButton#addEventListener()
      */
     @Override
     public void setButtonData(ButtonData data) {

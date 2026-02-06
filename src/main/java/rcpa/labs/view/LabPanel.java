@@ -7,6 +7,8 @@ import rcpa.labs.service.LabMaster;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import static rcpa.labs.config.Configuration.*;
 
@@ -16,7 +18,7 @@ import static rcpa.labs.config.Configuration.*;
  *
  * Класс для отрисовки панели на окне
  */
-public class LabPanel extends JPanel {
+public class LabPanel extends JPanel implements ActionListener {
 
     /**
      * Переменная хранящая экземпляр класса LabMaster
@@ -34,17 +36,20 @@ public class LabPanel extends JPanel {
     private final ButtonRepository buttonRepository;
 
 
+
     /**
      * Конструктор с инициализацией элементов на панели
      *
      * @param frame - передаваемый параметр окна
      */
     public LabPanel(JFrame frame) {
+        Timer timer = new Timer(MILLISECONDS_PER_FRAME,this);
         this.labMaster = LabMaster.getLabMaster();
         this.buttonRepository = ButtonRepository.getButtonRepository(this);
 
         initPanel(frame);
         chooseLab();
+        timer.start();
     }
 
     /**
@@ -90,6 +95,12 @@ public class LabPanel extends JPanel {
                                         CALCULATE_BUTTON_POSITION_Y,
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.CALCULATE_TRAP_BUTTON,
+                                        "Метод трапеции",
+                                            CALCULATE_TRAP_BUTTON_POSITION_X,
+                                            CALCULATE_TRAP_BUTTON_POSITION_Y,
+                                            BUTTON_WIDTH,
+                                            BUTTON_HEIGHT);
             for (int i = 0; i < 3; i++) {
                 JTextField text = new JTextField();
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
@@ -118,6 +129,96 @@ public class LabPanel extends JPanel {
     }
 
     /**
+     * Метод включения флага "Все поля пустые"
+     *
+     * @see LabMaster
+     */
+    public void isFieldEmpty (){
+        labMaster.isFieldEmpty=true;
+    }
+
+    /**
+     * Метод включения флага "Поле верхняя граница не заполнено"
+     *
+     * @see LabMaster
+     */
+    public void isTopBorderEmpty (){
+        labMaster.isTopBorderEmpty=true;
+    }
+
+    /**
+     * Метод включения флага "Поле нижняя граница не заполнено"
+     *
+     * @see LabMaster
+     */
+    public void isBottomBorderEmpty (){
+        labMaster.isBottomBorderEmpty=true;
+    }
+
+    /**
+     * Метод включения флага "Поле шаг интегрирования не заполнено"
+     *
+     * @see LabMaster
+     */
+    public void isStepFieldEmpty (){
+        labMaster.isStepFieldEmpty=true;
+    }
+
+    /**
+     * Метод включения флага "Что-то пошло не так"
+     *
+     * @see LabMaster
+     */
+    public void isSomethingGoWrong (){
+        labMaster.isSomethingGoWrong=true;
+    }
+
+    /**
+     * Метод включения флага "Не выбрано ни одной строки"
+     *
+     * @see LabMaster
+     */
+    public void isRowNoSelected (){
+        labMaster.isRowNoSelected=true;
+    }
+
+    /**
+     * Метод включения флага "Верхняя граница меньше нижней границы"
+     *
+     * @see LabMaster
+     */
+    public void isTopSmallerBottom(){
+        labMaster.isTopSmallerBottom =true;
+    }
+
+    /**
+     * Метод включения флага "Строка успешно добавлена"
+     *
+     * @see LabMaster
+     */
+    public void isAddNewRowSuccess (){
+        labMaster.isAddNewRowSuccess=true;
+    }
+
+    /**
+     * Метод включения флага "Строка успешно удалена"
+     *
+     * @see LabMaster
+     */
+    public void isDeleteRowSuccess (){
+        labMaster.isDeleteRowSuccess=true;
+    }
+
+    /**
+     * Метод включения флага "Значение успешно вычислено"
+     *
+     * @see LabMaster
+     */
+    public void isCalculateRowSuccess (){
+        labMaster.isCalculateRowSuccess=true;
+    }
+
+    /**
      * Метод для отрисовки панели
      * @param g - the Graphics context in which to paint
      */
@@ -125,5 +226,14 @@ public class LabPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         labMaster.renderFrame(g);
+    }
+
+    /**
+     * Метод для перерисовки окна
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        repaint();
     }
 }

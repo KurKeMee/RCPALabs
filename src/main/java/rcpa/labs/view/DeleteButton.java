@@ -40,6 +40,9 @@ public class DeleteButton extends Button {
            int rowId = getButtonData().getLinkedTable().getTableSelectedRow();
            if(rowId != -1) {
                getButtonData().getLinkedTable().deleteRow(rowId);
+               getButtonData().getParentPanel().isDeleteRowSuccess();
+           }else{
+               getButtonData().getParentPanel().isRowNoSelected();
            }
         });
     }
