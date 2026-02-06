@@ -13,6 +13,20 @@ import static rcpa.labs.config.Configuration.*;
 public class LabMaster {
 
     /**
+     * Флаги для сообщений
+     */
+    public boolean isFieldEmpty = false;
+    public boolean isTopBorderEmpty = false;
+    public boolean isBottomBorderEmpty = false;
+    public boolean isStepFieldEmpty = false;
+    public boolean isSomethingGoWrong = false;
+    public boolean isRowNoSelected = false;
+    public boolean isTopSmallerBottom = false;
+    public boolean isAddNewRowSuccess = false;
+    public boolean isDeleteRowSuccess = false;
+    public boolean isCalculateRowSuccess = false;
+
+    /**
      * Переменная для хранения экземпляра класса LabMaster
      */
     private static LabMaster instance;
@@ -26,15 +40,23 @@ public class LabMaster {
 
 
     /**
+     * Переменная для задержки перед исчезновением сообщения
+     */
+    private int logMessageExists =0;
+
+
+    /**
+     * Переменная для изменения прозрачности сообщения
+     */
+    private float currentLogMessageTextAlpha = 1;
+
+
+    /**
      * Конструктор объявлен как private для паттерна Singleton
      *
      * @see LabMaster#getLabMaster()
      */
     private LabMaster(){}
-
-    private String currentMessage = "";
-
-    private int messageType = 0;
 
     /**
      * Метод для получения единственного экземпляра класса
@@ -49,7 +71,6 @@ public class LabMaster {
         return instance;
     }
 
-
     /**
      * Метод для отрисовки окна
      * @param graphics - графика передаваемая с панели
@@ -57,27 +78,11 @@ public class LabMaster {
     public void renderFrame(Graphics graphics) {
         graphics.setColor(new Color(240,230,140));
         graphics.fillRect(0,0,LAB_WIDTH,LAB_HEIGHT);
+        graphics.setFont(new Font("Arial", Font.PLAIN, 50));
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("e^-x", 50,500);
         if(lab == LAB1){
-            //graphics.setColor(Color.BLACK);
-            Color rectColor;
-            if (messageType == 0) {
-                rectColor = Color.RED;
-            } else if (messageType == 1) {
-                rectColor = Color.YELLOW;
-            } else {
-                rectColor = Color.GREEN;
-            }
-
-            graphics.setColor(rectColor);
-            graphics.fillRect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT);
-
-            graphics.setColor(Color.BLACK);
-            graphics.drawRect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT);
-
-            graphics.setFont(new Font("Arial", Font.PLAIN, 12));
-            graphics.drawString(currentMessage, RECT_X + 10, RECT_Y + 20);
-            //color = new Color(255, 200, 200);
-            //graphics.setColor(Color);
+            checkLogMessage(graphics);
         }
         else if(lab == LAB2){
             /*graphics.setFont(new Font("Arial", Font.PLAIN, 40));
@@ -87,31 +92,84 @@ public class LabMaster {
     }
 
     /**
-     * Устанавливает ошибку (красный)
-     * @param message - текст
+     * Выводит сообщение на экран
+     * @param g - графика
+     * @param message - текст сообщения
+     * @param color - цвет сообщения
      */
-    public void showError(String message) {
-        this.currentMessage = message;
-        this.messageType = 0;
+    private void showLogMessage(Graphics g, String message,Color color) {
+        logMessageExists++;
+        if(logMessageExists > 60 && currentLogMessageTextAlpha>0) {
+            currentLogMessageTextAlpha-= 0.05F;
+        }
+
+        g.setColor(new Color(color.getRed()/ 255.0f,
+                            color.getGreen()/ 255.0f,
+                            color.getBlue()/ 255.0f,
+                            currentLogMessageTextAlpha));
+
+        g.fillRoundRect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT,30,30);
+        g.setColor(new Color(255/255.0f,
+                            255/255.0f,
+                            255/255.0f,
+                                currentLogMessageTextAlpha));
+        g.setFont(new Font("Arial", Font.BOLD, 12));
+        g.drawString(message, RECT_X + 10, RECT_Y + 20);
+
+        if (currentLogMessageTextAlpha <= 0) {
+            currentLogMessageTextAlpha = 1;
+            logMessageExists = 0;
+
+            isFieldEmpty = false;
+            isTopBorderEmpty = false;
+            isBottomBorderEmpty = false;
+            isStepFieldEmpty = false;
+            isSomethingGoWrong = false;
+            isRowNoSelected = false;
+            isTopSmallerBottom = false;
+            isAddNewRowSuccess = false;
+            isDeleteRowSuccess = false;
+            isCalculateRowSuccess = false;
+        }
     }
 
     /**
-     * Устанавливает предупреждение (желтый)
-     * @param message - текст
+     * Метод проверки наличия включенных флагов
+     * @param graphics - графика
      */
-    public void showWarning(String message) {
-        this.currentMessage = message;
-        this.messageType = 1;
+    private void checkLogMessage(Graphics graphics){
+        if(isFieldEmpty){
+            showLogMessage(graphics,FIELDS_EMPTY,Color.red);
+        }
+        else if(isTopSmallerBottom){
+            showLogMessage(graphics,TOP_BIGGER_BOTTOM,Color.red);
+        }
+        else if(isSomethingGoWrong){
+            showLogMessage(graphics,SOMETHING_GO_WRONG,Color.red);
+        }
+        else if(isRowNoSelected){
+            showLogMessage(graphics,ROW_NO_SELECTED,Color.red);
+        }
+        else if(isBottomBorderEmpty){
+            showLogMessage(graphics,BOTTOM_BORDER_EMPTY,Color.orange);
+        }
+        else if(isTopBorderEmpty){
+            showLogMessage(graphics,TOP_BORDER_EMPTY,Color.orange);
+        }
+        else if(isStepFieldEmpty){
+            showLogMessage(graphics,STEP_FIELD_EMPTY,Color.orange);
+        }
+        else if(isAddNewRowSuccess){
+            showLogMessage(graphics,ADD_NEW_ROW_SUCCESS,Color.green);
+        }
+        else if(isCalculateRowSuccess){
+            showLogMessage(graphics,CALCULATE_ROW_SUCCESS,Color.green);
+        }
+        else if(isDeleteRowSuccess){
+            showLogMessage(graphics,DELETE_ROW_SUCCESS,Color.green);
+        }
     }
 
-    /**
-     * Устанавливает сообщение об успехе (зеленый)
-     * @param message - текст
-     */
-    public void showSuccess(String message) {
-        this.currentMessage = message;
-        this.messageType = 2;
-    }
     /**
      * Метод получения текущего состояния программы
      * @return byte - возвращает номер текущей лабораторной работы

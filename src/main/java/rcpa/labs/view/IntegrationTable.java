@@ -1,18 +1,11 @@
 package rcpa.labs.view;
 
-import rcpa.labs.config.Configuration;
-import rcpa.labs.model.ButtonData;
-import rcpa.labs.repository.ButtonRepository;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static rcpa.labs.config.Configuration.*;
 
@@ -40,9 +33,9 @@ public class IntegrationTable extends JScrollPane {
      * @param columns - массив строк, состоящий из заголовков таблицы
      * @param x       - расположение таблицы по горизонтали
      * @param y       - расположение таблицы по вертикали
-     * @see IntegrationTable#initTable(int, int)
+     * @see IntegrationTable#initTable(int, int, LabPanel)
      */
-    public IntegrationTable(String[] columns, int x, int y, JPanel parentPanel) {
+    public IntegrationTable(String[] columns, int x, int y, LabPanel parentPanel) {
         super(createTable(columns));
         initTable(x,y, parentPanel);
     }
@@ -83,7 +76,7 @@ public class IntegrationTable extends JScrollPane {
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false;
+                return column != 3;
             }
         };
     }
@@ -92,9 +85,9 @@ public class IntegrationTable extends JScrollPane {
      * Метод инициализации таблицы
      * @param x - расположение таблицы по горизонтали
      * @param y - расположение таблицы по вертикали
-     * @see IntegrationTable#IntegrationTable(String[],int,int, JPanel)
+     * @see IntegrationTable#IntegrationTable(String[],int,int, LabPanel)
      */
-    private void initTable(int x, int y, JPanel parentPanel) {
+    private void initTable(int x, int y, LabPanel parentPanel) {
         table = (JTable) this.getViewport().getView();
         table.setRowHeight(ROW_HEIGHT);
         table.setGridColor(Color.BLACK);
@@ -117,7 +110,9 @@ public class IntegrationTable extends JScrollPane {
         table.getSelectionModel().addListSelectionListener(e -> {
             if(table.getSelectedRow() > -1) {
                 Arrays.stream(parentPanel.getComponents())
-                        .filter(comp -> comp instanceof DeleteButton || comp instanceof CalculateButton)
+                        .filter(comp -> comp instanceof DeleteButton ||
+                                comp instanceof CalculateButton ||
+                                comp instanceof CalculateTrapButton)
                         .forEach(comp -> {
                             if (comp instanceof CalculateButton) {
                                 ((CalculateButton) comp).buttonVisible(true);
@@ -125,17 +120,25 @@ public class IntegrationTable extends JScrollPane {
                             if (comp instanceof DeleteButton) {
                                 ((DeleteButton) comp).buttonVisible(true);
                             }
+                            if(comp instanceof CalculateTrapButton) {
+                                ((CalculateTrapButton) comp).buttonVisible(true);
+                            }
                         });
             }
             else{
                 Arrays.stream(parentPanel.getComponents())
-                        .filter(comp -> comp instanceof DeleteButton || comp instanceof CalculateButton)
+                        .filter(comp -> comp instanceof DeleteButton ||
+                                comp instanceof CalculateButton ||
+                                comp instanceof CalculateTrapButton)
                         .forEach(comp -> {
                             if (comp instanceof CalculateButton) {
                                 ((CalculateButton) comp).buttonVisible(false);
                             }
                             if (comp instanceof DeleteButton) {
                                 ((DeleteButton) comp).buttonVisible(false);
+                            }
+                            if(comp instanceof CalculateTrapButton) {
+                                ((CalculateTrapButton) comp).buttonVisible(true);
                             }
                         });
             }
@@ -148,71 +151,88 @@ public class IntegrationTable extends JScrollPane {
      * @see IntegrationTable#integrationResult(double, double, double) - вычисляет значение интеграла
      * @see DefaultTableModel необходим для добавления новой строки
      */
-    public void addRow(String[] data){
+    public void addRow(String[] data, LabPanel parentPanel){
         if(this.table.getColumnCount() != data.length+1){
-            //TODO: добавить исключение, если кол-во данных != кол-во столбцов
-            System.out.println(this.table.getColumnCount());
-            return;
+            parentPanel.isSomethingGoWrong();
         }
 
         try {
             double bottomBorder = Double.parseDouble(data[0]);
             double topBorder = Double.parseDouble(data[1]);
             double stepIntegration = Double.parseDouble(data[2]);
-            if(bottomBorder>=topBorder || stepIntegration==0){
-                return;
+            if (bottomBorder >= topBorder) {
+                parentPanel.isTopSmallerBottom();
             }
+            if (stepIntegration == 0) {
+                parentPanel.isStepFieldEmpty();
+            }
+        } catch (NumberFormatException e) {
+            parentPanel.isSomethingGoWrong();
         }
-        catch (NumberFormatException e) {
-            return;
-        }
 
 
-        String[] newData = Arrays.copyOf(data, data.length+1);
+        String[] newData = Arrays.copyOf(data, data.length + 1);
 
-        newData[newData.length-1] ="";
+        newData[newData.length - 1] = "";
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(newData);
     }
 
-    /**
-     * Метод подсчета результата интегрирования
-     * Использует данные выбранной строки {@link IntegrationTable#getTableSelectedRow()}
-     */
-    public void countResult(){
-        int selectedRow = getTableSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+/**
+ * Метод подсчета результата интегрирования
+ * Использует данные выбранной строки {@link IntegrationTable#getTableSelectedRow()}
+ */
+public void countResult(boolean trap){
+    int selectedRow = getTableSelectedRow();
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-        double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
-        double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
-        double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+    double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
+    double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
+    double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
 
-        model.setValueAt(integrationResult(bottomBorder,topBorder,stepIntegration),selectedRow,3);
+    if(trap) {
+        model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
     }
-
-    /**
-     * Метод удаления выбранной строки
-     * @param id - передаваемый параметр id строки
-     */
-    public void deleteRow(int id){
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.removeRow(id);
+    else{
+        model.setValueAt(integrationResult(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
     }
+}
 
-    /**
-     * Метод вычисления интеграла на основе входных данных
-     * @param lowBorder     - нижняя граница интегрирования
-     * @param highBorder    - верхняя граница интегрирования
-     * @param step          - шаг интегрирования
-     * @return String       - результат интегрирования
-     */
-    public String integrationResult(double lowBorder, double highBorder, double step) {
+/**
+ * Метод удаления выбранной строки
+ * @param id - передаваемый параметр id строки
+ */
+public void deleteRow(int id){
+    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    model.removeRow(id);
+}
+
+/**
+ * Метод вычисления интеграла на основе входных данных
+ * @param lowBorder     - нижняя граница интегрирования
+ * @param highBorder    - верхняя граница интегрирования
+ * @param step          - шаг интегрирования
+ * @return String       - результат интегрирования
+ */
+public String integrationResult(double lowBorder, double highBorder, double step) {
+    double sum = 0.0;
+    double x = lowBorder;
+
+    while (x < highBorder) {
+        sum += Math.exp(-x) * step;
+        x += step;
+    }
+    System.out.println(sum);
+    return Double.toString(sum);
+}
+
+    public String integrationResultTrap(double lowBorder, double highBorder, double step) {
         double sum = 0.0;
         double x = lowBorder;
 
         while (x < highBorder) {
-            sum += Math.cos(x) * step;
+            sum += (Math.exp(-x) + Math.exp(-(x + step))) / 2 * step;
             x += step;
         }
         System.out.println(sum);

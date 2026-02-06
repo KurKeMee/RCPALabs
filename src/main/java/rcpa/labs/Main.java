@@ -5,6 +5,12 @@ import rcpa.labs.view.LabPanel;
 
 import javax.swing.*;
 
+/**
+ * @author Ivan Monin
+ * @author Danila Kokarev
+ * Главный метод программы
+ * Создаётся окно {@link JFrame} и в него добавляется панель {@link LabPanel}
+ */
 public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame(Configuration.LAB_NAME);

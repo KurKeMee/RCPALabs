@@ -35,7 +35,11 @@ public class CalculateButton extends Button {
     private void addEventListener() {
         this.addActionListener(e->{
             if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
-                getButtonData().getLinkedTable().countResult();
+                getButtonData().getLinkedTable().countResult(false);
+                getButtonData().getParentPanel().isCalculateRowSuccess();
+            }
+            else{
+                getButtonData().getParentPanel().isRowNoSelected();
             }
         });
     }

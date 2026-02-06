@@ -1,5 +1,7 @@
 package rcpa.labs.config;
 
+import javax.print.DocFlavor;
+
 public interface Configuration {
 
     String LAB_NAME = "Lab1 Monin Kokarev";
@@ -26,6 +28,8 @@ public interface Configuration {
     int ADD_BUTTON_POSITION_Y = 270;
     int CALCULATE_BUTTON_POSITION_X = 330;
     int CALCULATE_BUTTON_POSITION_Y = 450;
+    int CALCULATE_TRAP_BUTTON_POSITION_X = 330;
+    int CALCULATE_TRAP_BUTTON_POSITION_Y = 500;
     int DELETE_BUTTON_POSITION_X = 530;
     int DELETE_BUTTON_POSITION_Y = 450;
 
@@ -38,13 +42,28 @@ public interface Configuration {
     int LABEL_SPACING = 80;
 
     // Прямоугольник с ошибками
-    int RECT_X = 20;
-    int RECT_Y = 400;
-    int RECT_WIDTH = 200;
-    int RECT_HEIGHT = 100;
+    int RECT_X = 190;
+    int RECT_Y = 500;
+    int RECT_WIDTH = 300;
+    int RECT_HEIGHT = 30;
 
+    //Тексты ошибок
+    String FIELDS_EMPTY = "Поля не заполнены";
+    String TOP_BORDER_EMPTY = "Поле верхняя граница не заполнено";
+    String BOTTOM_BORDER_EMPTY = "Поле нижняя граница не заполнено";
+    String STEP_FIELD_EMPTY = "Поле шаг интегрирования не заполнено";
+    String SOMETHING_GO_WRONG = "Что-то пошло не так";
+    String ROW_NO_SELECTED = "Не выбрано ни одной строки";
+    String TOP_BIGGER_BOTTOM = "Верхняя граница меньше нижней границы";
+    String ADD_NEW_ROW_SUCCESS = "Строка успешно добавлена";
+    String DELETE_ROW_SUCCESS = "Строка успешно удалена";
+    String CALCULATE_ROW_SUCCESS = "Значение успешно вычислено";
+
+    //Анимация
     int MILLISECONDS_PER_FRAME = 40;
 
+
+    //Номера лабораторных
     byte LAB1 = 1;
     byte LAB2 = 2;
     byte LAB3 = 3;
