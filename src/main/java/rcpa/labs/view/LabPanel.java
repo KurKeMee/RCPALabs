@@ -165,6 +165,15 @@ public class LabPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * Метод включения флага "Шаг интегрирования меньше либо равен нулю"
+     *
+     * @see LabMaster
+     */
+    public void isLessThanZeroOrEqualToZero() {
+        labMaster.isLessThanZeroOrEqualToZero=true;
+    }
+
+    /**
      * Метод включения флага "Что-то пошло не так"
      *
      * @see LabMaster

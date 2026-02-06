@@ -19,6 +19,7 @@ public class LabMaster {
     public boolean isTopBorderEmpty = false;
     public boolean isBottomBorderEmpty = false;
     public boolean isStepFieldEmpty = false;
+    public boolean isLessThanZeroOrEqualToZero = false;
     public boolean isSomethingGoWrong = false;
     public boolean isRowNoSelected = false;
     public boolean isTopSmallerBottom = false;
@@ -124,6 +125,7 @@ public class LabMaster {
             isTopBorderEmpty = false;
             isBottomBorderEmpty = false;
             isStepFieldEmpty = false;
+            isLessThanZeroOrEqualToZero = false;
             isSomethingGoWrong = false;
             isRowNoSelected = false;
             isTopSmallerBottom = false;
@@ -158,6 +160,9 @@ public class LabMaster {
         }
         else if(isStepFieldEmpty){
             showLogMessage(graphics,STEP_FIELD_EMPTY,Color.orange);
+        }
+        else if (isLessThanZeroOrEqualToZero) {
+            showLogMessage(graphics, LESS_THAN_ZERO_OR_EQUAL_TO_ZERO, Color.orange);
         }
         else if(isAddNewRowSuccess){
             showLogMessage(graphics,ADD_NEW_ROW_SUCCESS,Color.green);

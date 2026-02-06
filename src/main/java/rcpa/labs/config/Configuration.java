@@ -28,10 +28,10 @@ public interface Configuration {
     int ADD_BUTTON_POSITION_Y = 270;
     int CALCULATE_BUTTON_POSITION_X = 330;
     int CALCULATE_BUTTON_POSITION_Y = 450;
-    int CALCULATE_TRAP_BUTTON_POSITION_X = 330;
-    int CALCULATE_TRAP_BUTTON_POSITION_Y = 500;
+    int CALCULATE_TRAP_BUTTON_POSITION_X = 530;
+    int CALCULATE_TRAP_BUTTON_POSITION_Y = 450;
     int DELETE_BUTTON_POSITION_X = 530;
-    int DELETE_BUTTON_POSITION_Y = 450;
+    int DELETE_BUTTON_POSITION_Y = 500;
 
     // Лэйблы
     int LABEL_WIDTH = 200;
@@ -52,6 +52,7 @@ public interface Configuration {
     String TOP_BORDER_EMPTY = "Поле верхняя граница не заполнено";
     String BOTTOM_BORDER_EMPTY = "Поле нижняя граница не заполнено";
     String STEP_FIELD_EMPTY = "Поле шаг интегрирования не заполнено";
+    String LESS_THAN_ZERO_OR_EQUAL_TO_ZERO = "Шаг интегрирования меньше либо равен нулю";
     String SOMETHING_GO_WRONG = "Что-то пошло не так";
     String ROW_NO_SELECTED = "Не выбрано ни одной строки";
     String TOP_BIGGER_BOTTOM = "Верхняя граница меньше нижней границы";
