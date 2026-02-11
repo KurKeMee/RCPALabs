@@ -162,9 +162,11 @@ public class IntegrationTable extends JScrollPane {
             double stepIntegration = Double.parseDouble(data[2]);
             if (bottomBorder >= topBorder) {
                 parentPanel.isTopSmallerBottom();
+                return;
             }
-            if (stepIntegration == 0) {
-                parentPanel.isStepFieldEmpty();
+            if (stepIntegration <= 0) {
+                parentPanel.isLessThanZeroOrEqualToZero();
+                return;
             }
         } catch (NumberFormatException e) {
             parentPanel.isSomethingGoWrong();
@@ -227,14 +229,23 @@ public String integrationResult(double lowBorder, double highBorder, double step
     return Double.toString(sum);
 }
 
+    /**
+     * Метод вычисления интеграла методом трапеции на основе входных данных
+     * @param lowBorder     - нижняя граница интегрирования
+     * @param highBorder    - верхняя граница интегрирования
+     * @param step          - шаг интегрирования
+     * @return String       - результат интегрирования
+     */
     public String integrationResultTrap(double lowBorder, double highBorder, double step) {
         double sum = 0.0;
         double x = lowBorder;
 
         while (x < highBorder) {
-            sum += (Math.exp(-x) + Math.exp(-(x + step))) / 2 * step;
-            x += step;
+            double nextX = Math.min(x + step, highBorder);
+            sum += (nextX - x) * (Math.exp(-x) + Math.exp(-nextX)) / 2;
+            x = nextX;
         }
+
         System.out.println(sum);
         return Double.toString(sum);
     }
