@@ -185,13 +185,22 @@ public class IntegrationTable extends JScrollPane {
  * Метод подсчета результата интегрирования
  * Использует данные выбранной строки {@link IntegrationTable#getTableSelectedRow()}
  */
-public void countResult(boolean trap){
+public void countResult(boolean trap, LabPanel parentPanel){
     int selectedRow = getTableSelectedRow();
     DefaultTableModel model = (DefaultTableModel) table.getModel();
 
     double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
     double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
     double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+
+    if(stepIntegration<=0){
+        parentPanel.isLessThanZeroOrEqualToZero();
+        return;
+    }
+    if(bottomBorder>=topBorder){
+        parentPanel.isTopSmallerBottom();
+        return;
+    }
 
     if(trap) {
         model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
@@ -211,7 +220,7 @@ public void deleteRow(int id){
 }
 
 /**
- * Метод вычисления интеграла на основе входных данных
+ * Метод левых прямоугольников
  * @param lowBorder     - нижняя граница интегрирования
  * @param highBorder    - верхняя граница интегрирования
  * @param step          - шаг интегрирования
@@ -240,13 +249,13 @@ public String integrationResult(double lowBorder, double highBorder, double step
         double sum = 0.0;
         double x = lowBorder;
 
+        System.out.println(highBorder);
         while (x < highBorder) {
-            sum += step * (Math.exp(-x) + Math.exp(-x)) / 2;
-            x += step;
+            double nextX = Math.min(x + step, highBorder);
+            sum += (nextX - x) * (Math.exp(-x) + Math.exp(-nextX)) / 2;
+            x = nextX;
         }
-        x-=highBorder-x;
-        sum-= step * (Math.exp(-x) + Math.exp(-x)) / 2;
-        System.out.println(sum);
+
         return Double.toString(sum);
     }
 

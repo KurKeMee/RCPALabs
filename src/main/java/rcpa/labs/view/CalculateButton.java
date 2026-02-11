@@ -30,12 +30,12 @@ public class CalculateButton extends Button {
     /**
      * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
      * При нажатии происходит вычисление результата интегрирования в выбранной строке
-     * @see IntegrationTable#countResult()
+     * @see IntegrationTable#countResult(boolean, LabPanel)
      */
     private void addEventListener() {
         this.addActionListener(e->{
             if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
-                getButtonData().getLinkedTable().countResult(false);
+                getButtonData().getLinkedTable().countResult(false, getButtonData().getParentPanel());
                 getButtonData().getParentPanel().isCalculateRowSuccess();
             }
             else{
