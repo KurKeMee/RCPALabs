@@ -222,9 +222,8 @@ public String integrationResult(double lowBorder, double highBorder, double step
     double x = lowBorder;
 
     while (x < highBorder) {
-        double h = Math.min(step, highBorder - x);
-        sum += Math.exp(-x) * h;
-        x += h;
+        sum += Math.exp(-x) * step;
+        x += step;
     }
     System.out.println(sum);
     return Double.toString(sum);
