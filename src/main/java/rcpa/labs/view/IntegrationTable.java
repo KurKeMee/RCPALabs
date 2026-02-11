@@ -211,7 +211,7 @@ public void deleteRow(int id){
 }
 
 /**
- * Метод вычисления интеграла на основе входных данных
+ * Метод левых прямоугольников
  * @param lowBorder     - нижняя граница интегрирования
  * @param highBorder    - верхняя граница интегрирования
  * @param step          - шаг интегрирования
@@ -241,12 +241,11 @@ public String integrationResult(double lowBorder, double highBorder, double step
         double x = lowBorder;
 
         while (x < highBorder) {
-            sum += step * (Math.exp(-x) + Math.exp(-x)) / 2;
-            x += step;
+            double nextX = Math.min(x + step, highBorder);
+            sum += (nextX - x) * (Math.exp(-x) + Math.exp(-nextX)) / 2;
+            x = nextX;
         }
-        x-=highBorder-x;
-        sum-= step * (Math.exp(-x) + Math.exp(-x)) / 2;
-        System.out.println(sum);
+
         return Double.toString(sum);
     }
 
