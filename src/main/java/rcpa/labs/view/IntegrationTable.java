@@ -181,75 +181,77 @@ public class IntegrationTable extends JScrollPane {
         model.addRow(newData);
     }
 
-/**
- * Метод подсчета результата интегрирования
- * Использует данные выбранной строки {@link IntegrationTable#getTableSelectedRow()}
- */
-public void countResult(boolean trap, LabPanel parentPanel){
-    int selectedRow = getTableSelectedRow();
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
+    /**
+     * Метод подсчета результата интегрирования
+     * Использует данные выбранной строки {@link IntegrationTable#getTableSelectedRow()}
+     */
+    public void countResult(boolean trap, LabPanel parentPanel) {
+        int selectedRow = getTableSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-    try {
-        double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
-        double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
-        double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+        try {
+            double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
+            double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
+            double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
 
-        if(stepIntegration<=0){
-            parentPanel.isLessThanZeroOrEqualToZero();
-            return;
-        }
-        if(bottomBorder>=topBorder){
-            parentPanel.isTopSmallerBottom();
-            return;
+            if (stepIntegration <= 0) {
+                parentPanel.isLessThanZeroOrEqualToZero();
+                return;
+            }
+            if (bottomBorder >= topBorder) {
+                parentPanel.isTopSmallerBottom();
+                return;
+            }
+
+            if (trap) {
+                model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
+            } else {
+                model.setValueAt(integrationResult(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
+            }
+        } catch (NumberFormatException e) {
+            parentPanel.isSomethingGoWrong();
         }
 
-        if(trap) {
-            model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
-        }
-        else{
-            model.setValueAt(integrationResult(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
-        }
     }
-    catch (NumberFormatException e) {
-        parentPanel.isSomethingGoWrong();
+
+    /**
+     * Метод удаления выбранной строки
+     *
+     * @param id - передаваемый параметр id строки
+     */
+    public void deleteRow(int id) {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.removeRow(id);
+
     }
 
-}
+    /**
+     * Метод левых прямоугольников
+     *
+     * @param lowBorder  - нижняя граница интегрирования
+     * @param highBorder - верхняя граница интегрирования
+     * @param step       - шаг интегрирования
+     * @return String       - результат интегрирования
+     */
+    public String integrationResult(double lowBorder, double highBorder, double step) {
+        double sum = 0.0;
+        double x = lowBorder;
 
-/**
- * Метод удаления выбранной строки
- * @param id - передаваемый параметр id строки
- */
-public void deleteRow(int id){
-    DefaultTableModel model = (DefaultTableModel) table.getModel();
-    model.removeRow(id);
-}
-
-/**
- * Метод левых прямоугольников
- * @param lowBorder     - нижняя граница интегрирования
- * @param highBorder    - верхняя граница интегрирования
- * @param step          - шаг интегрирования
- * @return String       - результат интегрирования
- */
-public String integrationResult(double lowBorder, double highBorder, double step) {
-    double sum = 0.0;
-    double x = lowBorder;
-
-    while (x < highBorder) {
-        sum += Math.exp(-x) * step;
-        x += step;
+        while (x < highBorder) {
+            sum += Math.exp(-x) * step;
+            x += step;
+        }
+        System.out.println(sum);
+        return Double.toString(sum);
     }
-    System.out.println(sum);
-    return Double.toString(sum);
-}
 
     /**
      * Метод вычисления интеграла методом трапеции на основе входных данных
-     * @param lowBorder     - нижняя граница интегрирования
-     * @param highBorder    - верхняя граница интегрирования
-     * @param step          - шаг интегрирования
-     * @return String       - результат интегрирования  
+     *
+     * @param lowBorder  - нижняя граница интегрирования
+     * @param highBorder - верхняя граница интегрирования
+     * @param step       - шаг интегрирования
+     * @return String       - результат интегрирования
      */
     public String integrationResultTrap(double lowBorder, double highBorder, double step) {
         double sum = 0.0;
