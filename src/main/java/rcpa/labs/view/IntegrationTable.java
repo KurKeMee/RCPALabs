@@ -1,5 +1,7 @@
 package rcpa.labs.view;
 
+import rcpa.labs.model.Button;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -110,36 +112,16 @@ public class IntegrationTable extends JScrollPane {
         table.getSelectionModel().addListSelectionListener(e -> {
             if(table.getSelectedRow() > -1) {
                 Arrays.stream(parentPanel.getComponents())
-                        .filter(comp -> comp instanceof DeleteButton ||
-                                comp instanceof CalculateButton ||
-                                comp instanceof CalculateTrapButton)
+                        .filter(comp -> comp instanceof Button)
                         .forEach(comp -> {
-                            if (comp instanceof CalculateButton) {
-                                ((CalculateButton) comp).buttonVisible(true);
-                            }
-                            if (comp instanceof DeleteButton) {
-                                ((DeleteButton) comp).buttonVisible(true);
-                            }
-                            if(comp instanceof CalculateTrapButton) {
-                                ((CalculateTrapButton) comp).buttonVisible(true);
-                            }
+                            ((Button) comp).buttonVisible(true);
                         });
             }
             else{
                 Arrays.stream(parentPanel.getComponents())
-                        .filter(comp -> comp instanceof DeleteButton ||
-                                comp instanceof CalculateButton ||
-                                comp instanceof CalculateTrapButton)
+                        .filter(comp -> comp instanceof Button)
                         .forEach(comp -> {
-                            if (comp instanceof CalculateButton) {
-                                ((CalculateButton) comp).buttonVisible(false);
-                            }
-                            if (comp instanceof DeleteButton) {
-                                ((DeleteButton) comp).buttonVisible(false);
-                            }
-                            if(comp instanceof CalculateTrapButton) {
-                                ((CalculateTrapButton) comp).buttonVisible(true);
-                            }
+                            ((Button) comp).buttonVisible(false);
                         });
             }
         });
@@ -222,7 +204,6 @@ public class IntegrationTable extends JScrollPane {
     public void deleteRow(int id) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.removeRow(id);
-
     }
 
     /**
