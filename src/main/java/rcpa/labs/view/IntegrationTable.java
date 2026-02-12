@@ -189,25 +189,31 @@ public void countResult(boolean trap, LabPanel parentPanel){
     int selectedRow = getTableSelectedRow();
     DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-    double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
-    double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
-    double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+    try {
+        double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
+        double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
+        double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
 
-    if(stepIntegration<=0){
-        parentPanel.isLessThanZeroOrEqualToZero();
-        return;
+        if(stepIntegration<=0){
+            parentPanel.isLessThanZeroOrEqualToZero();
+            return;
+        }
+        if(bottomBorder>=topBorder){
+            parentPanel.isTopSmallerBottom();
+            return;
+        }
+
+        if(trap) {
+            model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
+        }
+        else{
+            model.setValueAt(integrationResult(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
+        }
     }
-    if(bottomBorder>=topBorder){
-        parentPanel.isTopSmallerBottom();
-        return;
+    catch (NumberFormatException e) {
+        parentPanel.isSomethingGoWrong();
     }
 
-    if(trap) {
-        model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
-    }
-    else{
-        model.setValueAt(integrationResult(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
-    }
 }
 
 /**
