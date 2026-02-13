@@ -1,12 +1,14 @@
 package rcpa.labs.view;
 
 import rcpa.labs.model.Button;
+import rcpa.labs.model.RecIntegral;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static rcpa.labs.config.Configuration.*;
@@ -27,6 +29,7 @@ public class IntegrationTable extends JScrollPane {
      */
     private JTable table;
 
+    private ArrayList<RecIntegral> tableRows = new ArrayList<>();
 
     /**
      * Конструктор IntegrationTable
@@ -161,6 +164,7 @@ public class IntegrationTable extends JScrollPane {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(newData);
+        tableRows.add(new RecIntegral(newData[0],newData[1],newData[2], ""));
     }
 
     /**
@@ -169,6 +173,7 @@ public class IntegrationTable extends JScrollPane {
      */
     public void countResult(boolean trap, LabPanel parentPanel) {
         int selectedRow = getTableSelectedRow();
+
         DefaultTableModel model = (DefaultTableModel) table.getModel();
 
         try {
@@ -185,15 +190,31 @@ public class IntegrationTable extends JScrollPane {
                 return;
             }
 
+            String result;
             if (trap) {
-                model.setValueAt(integrationResultTrap(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
+                result = integrationResultTrap(bottomBorder, topBorder, stepIntegration);
             } else {
-                model.setValueAt(integrationResult(bottomBorder, topBorder, stepIntegration), selectedRow, 3);
+                result = integrationResult(bottomBorder, topBorder, stepIntegration);
             }
+            model.setValueAt(result, selectedRow, 3);
+            tableRows.get(selectedRow).result = result;
         } catch (NumberFormatException e) {
             parentPanel.isSomethingGoWrong();
         }
 
+    }
+
+    public void clearTable() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.getDataVector().removeAllElements();
+    }
+
+    public void fillTable() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for (int i = 0; i < tableRows.size(); i++) {
+            String[] arr = tableRows.get(i).getStringArray();
+            model.addRow(arr);
+        }
     }
 
     /**
@@ -204,6 +225,7 @@ public class IntegrationTable extends JScrollPane {
     public void deleteRow(int id) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.removeRow(id);
+        tableRows.remove(id);
     }
 
     /**
@@ -260,5 +282,13 @@ public class IntegrationTable extends JScrollPane {
      */
     public JTable getTable(){
         return this.table;
+    }
+
+    public ArrayList<RecIntegral> getTableRows() {
+        return tableRows;
+    }
+
+    public void setTableRows(ArrayList<RecIntegral> tableRows) {
+        this.tableRows = tableRows;
     }
 }
