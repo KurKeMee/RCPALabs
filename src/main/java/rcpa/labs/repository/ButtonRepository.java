@@ -152,7 +152,11 @@ public class ButtonRepository {
         Button button = type.create();
 
         button.setButtonData(newBD);
-        button.buttonVisible(false);
+        if(button instanceof DeleteButton ||
+                button instanceof CalculateButton ||
+                button instanceof CalculateTrapButton) {
+            button.buttonVisible(false);
+        }
         buttons.add(button);
     }
 

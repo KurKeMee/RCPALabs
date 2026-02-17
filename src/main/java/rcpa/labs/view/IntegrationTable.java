@@ -115,14 +115,18 @@ public class IntegrationTable extends JScrollPane {
         table.getSelectionModel().addListSelectionListener(e -> {
             if(table.getSelectedRow() > -1) {
                 Arrays.stream(parentPanel.getComponents())
-                        .filter(comp -> comp instanceof Button)
+                        .filter(comp -> comp instanceof DeleteButton ||
+                                comp instanceof CalculateButton ||
+                                comp instanceof CalculateTrapButton)
                         .forEach(comp -> {
                             ((Button) comp).buttonVisible(true);
                         });
             }
             else{
                 Arrays.stream(parentPanel.getComponents())
-                        .filter(comp -> comp instanceof Button)
+                        .filter(comp -> comp instanceof DeleteButton ||
+                                comp instanceof CalculateButton ||
+                                comp instanceof CalculateTrapButton)
                         .forEach(comp -> {
                             ((Button) comp).buttonVisible(false);
                         });
