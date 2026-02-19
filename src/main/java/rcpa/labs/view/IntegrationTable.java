@@ -153,13 +153,13 @@ public class IntegrationTable extends JScrollPane {
 
                     switch (column) {
                         case 0:
-                            tableRows.get(row).lowBorder = newValue.toString();
+                            tableRows.get(row).setLowBorder(newValue.toString());
                             break;
                         case 1:
-                            tableRows.get(row).highBorder = newValue.toString();
+                            tableRows.get(row).setHighBorder(newValue.toString());
                             break;
                         case 2:
-                            tableRows.get(row).stepIntegration = newValue.toString();
+                            tableRows.get(row).setStepIntegration(newValue.toString());
                         default:
                             break;
                     }
@@ -234,7 +234,7 @@ public class IntegrationTable extends JScrollPane {
                 result = integrationResult(bottomBorder, topBorder, stepIntegration);
             }
             model.setValueAt(result, selectedRow, 3);
-            tableRows.get(selectedRow).result = result;
+            tableRows.get(selectedRow).setResult(result);
         } catch (NumberFormatException e) {
             parentPanel.isSomethingGoWrong();
         }
