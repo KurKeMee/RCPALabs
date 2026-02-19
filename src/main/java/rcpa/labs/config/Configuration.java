@@ -5,7 +5,7 @@ import javax.print.DocFlavor;
 public interface Configuration {
 
     String LAB_NAME = "Lab1 Monin Kokarev";
-    int LAB_WIDTH = 800;
+    int LAB_WIDTH = 1000;
     int LAB_HEIGHT = 600;
 
     // Таблица
@@ -21,16 +21,16 @@ public interface Configuration {
     int FIELD_SPACING = 80;
 
     // Кнопки
-    int BUTTON_WIDTH = 150;
+    int BUTTON_WIDTH = 200;
     int BUTTON_HEIGHT = 30;
 
     int ADD_BUTTON_POSITION_X = 30;
     int ADD_BUTTON_POSITION_Y = 270;
     int CALCULATE_BUTTON_POSITION_X = 330;
     int CALCULATE_BUTTON_POSITION_Y = 450;
-    int CALCULATE_TRAP_BUTTON_POSITION_X = 530;
+    int CALCULATE_TRAP_BUTTON_POSITION_X = 580;
     int CALCULATE_TRAP_BUTTON_POSITION_Y = 450;
-    int DELETE_BUTTON_POSITION_X = 530;
+    int DELETE_BUTTON_POSITION_X = 580;
     int DELETE_BUTTON_POSITION_Y = 500;
     int CLEAR_BUTTON_POSITION_X = 30;
     int CLEAR_BUTTON_POSITION_Y = 320;

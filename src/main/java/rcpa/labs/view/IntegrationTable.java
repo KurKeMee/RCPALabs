@@ -111,7 +111,7 @@ public class IntegrationTable extends JScrollPane {
         table.setCellSelectionEnabled(false);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
-        this.setBounds(x,y,400,400);
+        this.setBounds(x,y,600,400);
 
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.setForeground(Color.DARK_GRAY);
