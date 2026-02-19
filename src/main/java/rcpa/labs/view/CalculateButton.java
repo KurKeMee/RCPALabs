@@ -11,9 +11,8 @@ import java.awt.*;
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки вычисления интеграла методом прямоугольников
+ * Класс кнопки вычисления
  * Наследуется от Button {@link Button}
- * При нажатии вычисляет интеграл для выбранной строки таблицы методом левых прямоугольников
  */
 public class CalculateButton extends Button {
 
@@ -31,12 +30,12 @@ public class CalculateButton extends Button {
     /**
      * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
      * При нажатии происходит вычисление результата интегрирования в выбранной строке
-     * @see IntegrationTable#countResult(boolean, LabPanel)
+     * @see IntegrationTable#countResult()
      */
     private void addEventListener() {
         this.addActionListener(e->{
             if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
-                getButtonData().getLinkedTable().countResult(false, getButtonData().getParentPanel());
+                getButtonData().getLinkedTable().countResult(false);
                 getButtonData().getParentPanel().isCalculateRowSuccess();
             }
             else{

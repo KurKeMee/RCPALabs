@@ -32,10 +32,6 @@ public interface Configuration {
     int CALCULATE_TRAP_BUTTON_POSITION_Y = 450;
     int DELETE_BUTTON_POSITION_X = 530;
     int DELETE_BUTTON_POSITION_Y = 500;
-    int CLEAR_BUTTON_POSITION_X = 30;
-    int CLEAR_BUTTON_POSITION_Y = 320;
-    int FILL_BUTTON_POSITION_X = 30;
-    int FILL_BUTTON_POSITION_Y = 370;
 
     // Лэйблы
     int LABEL_WIDTH = 200;
