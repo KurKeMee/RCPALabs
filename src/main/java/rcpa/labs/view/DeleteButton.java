@@ -1,21 +1,18 @@
 package rcpa.labs.view;
 
-import rcpa.labs.config.Configuration;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.ButtonData;
-import rcpa.labs.service.LabMaster;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки вычисления
+ * Класс кнопки удаления строки из таблицы
  * Наследуется от Button {@link Button}
+ * При нажатии удаляет выбранную строку из таблицы
  */
 public class DeleteButton extends Button {
 

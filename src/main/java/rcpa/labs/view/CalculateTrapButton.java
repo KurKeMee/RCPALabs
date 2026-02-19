@@ -17,8 +17,9 @@ import java.util.stream.Collectors;
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки добавления в таблицу {@link IntegrationTable}
+ * Класс кнопки вычисления интеграла методом трапеции {@link IntegrationTable}
  * Наследуется от Button {@link Button}
+ * При нажатии вычисляет интеграл для выбранной строки таблицы методом трапеций
  */
 public class CalculateTrapButton extends Button {
 

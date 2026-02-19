@@ -4,12 +4,16 @@ import rcpa.labs.model.Button;
 import rcpa.labs.model.RecIntegral;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EventObject;
 
 import static rcpa.labs.config.Configuration.*;
 
@@ -29,6 +33,11 @@ public class IntegrationTable extends JScrollPane {
      */
     private JTable table;
 
+
+    /**
+     * Список записей таблицы для хранения данных
+     * @see RecIntegral
+     */
     private ArrayList<RecIntegral> tableRows = new ArrayList<>();
 
     /**
@@ -102,7 +111,6 @@ public class IntegrationTable extends JScrollPane {
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
         this.setBounds(x,y,400,400);
-        table.setBackground(new Color(205,164,52));
 
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.setForeground(Color.DARK_GRAY);
@@ -132,13 +140,38 @@ public class IntegrationTable extends JScrollPane {
                         });
             }
         });
+
+        table.getModel().addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (e.getType() == TableModelEvent.UPDATE) {
+                    int row = e.getFirstRow();
+                    int column = e.getColumn();
+
+                    TableModel model = (TableModel)e.getSource();
+                    Object newValue = model.getValueAt(row, column);
+
+                    switch (column) {
+                        case 0:
+                            tableRows.get(row).lowBorder = newValue.toString();
+                            break;
+                        case 1:
+                            tableRows.get(row).highBorder = newValue.toString();
+                            break;
+                        case 2:
+                            tableRows.get(row).stepIntegration = newValue.toString();
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
     }
 
     /**
      * Метод добавления новой строки в таблицу
      * @param data - входные данные с полей ввода
      * @see IntegrationTable#integrationResult(double, double, double) - вычисляет значение интеграла
-     * @see DefaultTableModel необходим для добавления новой строки
      */
     public void addRow(String[] data, LabPanel parentPanel){
         if(this.table.getColumnCount() != data.length+1){
@@ -208,12 +241,19 @@ public class IntegrationTable extends JScrollPane {
 
     }
 
+    /**
+     * Метод очистки таблицы, удаляет все строки
+     */
     public void clearTable() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.getDataVector().removeAllElements();
     }
 
+    /**
+     * Метод заполнения данных в таблицу
+     */
     public void fillTable() {
+        clearTable();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         for (int i = 0; i < tableRows.size(); i++) {
             String[] arr = tableRows.get(i).getStringArray();
@@ -288,10 +328,18 @@ public class IntegrationTable extends JScrollPane {
         return this.table;
     }
 
+    /**
+     * Метод получения списка записей таблицы
+     * @return ArrayList<RecIntegral> - список записей
+     */
     public ArrayList<RecIntegral> getTableRows() {
         return tableRows;
     }
 
+    /**
+     * Метод установки списка записей таблицы
+     * @param tableRows - новый список записей
+     */
     public void setTableRows(ArrayList<RecIntegral> tableRows) {
         this.tableRows = tableRows;
     }
