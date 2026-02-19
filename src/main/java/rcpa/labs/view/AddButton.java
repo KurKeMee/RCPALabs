@@ -47,6 +47,8 @@ public class AddButton extends Button {
                             .collect(Collectors.toCollection(ArrayList::new));
 
             String[] values = textFields.stream().map(tf -> tf.getText()).toArray(String[]::new);
+
+            // Проверка полей ввода
             if (Arrays.stream(values).toList().stream().allMatch(String::isEmpty)) {
                 getButtonData().getParentPanel().isFieldEmpty();
             } else if (values[0].isEmpty()) {

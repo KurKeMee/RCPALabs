@@ -6,21 +6,21 @@ import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки вычисления интеграла методом прямоугольников
+ * Класс кнопки очистки
  * Наследуется от Button {@link Button}
- * При нажатии вычисляет интеграл для выбранной строки таблицы методом левых прямоугольников
  */
-public class CalculateButton extends Button {
+public class ClearTableButton extends Button {
 
     /**
-     * Конструктор CalculateButton
+     * Конструктор ClearTableButton
      */
-    public CalculateButton() {
+    public ClearTableButton() {
         super();
         this.setFont(new Font("Arial", Font.BOLD, 14));
         this.setForeground(Color.BLACK);
@@ -30,17 +30,19 @@ public class CalculateButton extends Button {
 
     /**
      * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
-     * При нажатии происходит вычисление результата интегрирования в выбранной строке
-     * @see IntegrationTable#countResult(boolean, LabPanel)
+     * При нажатии происходит очистка таблицы и скрытие кнопок вычисления
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
-                getButtonData().getLinkedTable().countResult(false, getButtonData().getParentPanel());
-                getButtonData().getParentPanel().isCalculateRowSuccess();
-            }
-            else{
-                getButtonData().getParentPanel().isRowNoSelected();
+            getButtonData().getLinkedTable().clearTable();
+
+            Component[] components = getButtonData().getParentPanel().getComponents();
+            for (Component comp : components) {
+                if (comp instanceof DeleteButton ||
+                        comp instanceof CalculateButton ||
+                        comp instanceof CalculateTrapButton) {
+                    ((Button) comp).buttonVisible(false);
+                }
             }
         });
     }
@@ -49,7 +51,7 @@ public class CalculateButton extends Button {
      * Переопределенный метод установки данных кнопки {@link Button#setButtonData(ButtonData)}
      *
      * @param data - данные кнопки
-     * @see CalculateButton#addEventListener()
+     * @see ClearTableButton#addEventListener()
      */
     @Override
     public void setButtonData(ButtonData data) {

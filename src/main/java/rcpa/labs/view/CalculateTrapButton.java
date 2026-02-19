@@ -17,8 +17,9 @@ import java.util.stream.Collectors;
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки добавления в таблицу {@link IntegrationTable}
+ * Класс кнопки вычисления интеграла методом трапеции {@link IntegrationTable}
  * Наследуется от Button {@link Button}
+ * При нажатии вычисляет интеграл для выбранной строки таблицы методом трапеций
  */
 public class CalculateTrapButton extends Button {
 
@@ -34,14 +35,14 @@ public class CalculateTrapButton extends Button {
 
 
     /**
-     * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
-     * При нажатии кнопки берутся значения полей и передаются в IntegrationTable для добавления новой строки
-     * @see IntegrationTable#addRow(String[],LabPanel)
+     *  Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
+     *  При нажатии происходит вычисление результата интегрирования в выбранной строке
+     *  @see IntegrationTable#countResult(boolean, LabPanel)
      */
     private void addEventListener() {
         this.addActionListener(e->{
             if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
-                getButtonData().getLinkedTable().countResult(true);
+                getButtonData().getLinkedTable().countResult(true, getButtonData().getParentPanel());
                 getButtonData().getParentPanel().isCalculateRowSuccess();
             }
             else{

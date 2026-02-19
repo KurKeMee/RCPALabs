@@ -97,10 +97,22 @@ public class LabPanel extends JPanel implements ActionListener {
                                         BUTTON_HEIGHT);
             buttonRepository.addNewButton(ButtonType.CALCULATE_TRAP_BUTTON,
                                         "Метод трапеции",
-                                            CALCULATE_TRAP_BUTTON_POSITION_X,
-                                            CALCULATE_TRAP_BUTTON_POSITION_Y,
-                                            BUTTON_WIDTH,
-                                            BUTTON_HEIGHT);
+                                        CALCULATE_TRAP_BUTTON_POSITION_X,
+                                        CALCULATE_TRAP_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.CLEAR_TABLE_BUTTON,
+                                        "Очистить",
+                                        CLEAR_BUTTON_POSITION_X,
+                                        CLEAR_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.FILL_TABLE_BUTTON,
+                                        "Заполнить",
+                                        FILL_BUTTON_POSITION_X,
+                                        FILL_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
             for (int i = 0; i < 3; i++) {
                 JTextField text = new JTextField();
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
