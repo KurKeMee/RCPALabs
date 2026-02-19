@@ -59,7 +59,6 @@ public class AddButton extends Button {
                 getButtonData().getParentPanel().isStepFieldEmpty();
             } else {
                 super.getButtonData().getLinkedTable().addRow(values, getButtonData().getParentPanel());
-                getButtonData().getParentPanel().isAddNewRowSuccess();
             }
         });
     }

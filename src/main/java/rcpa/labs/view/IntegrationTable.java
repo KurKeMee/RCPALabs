@@ -1,5 +1,6 @@
 package rcpa.labs.view;
 
+import rcpa.labs.exceptions.OutOfRangeException;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.RecIntegral;
 
@@ -42,7 +43,7 @@ public class IntegrationTable extends JScrollPane {
 
     /**
      * Конструктор IntegrationTable
-     * Переопределяет метод {@link DefaultTableModel#isCellEditable(int,int)} для запрета на редактирование ячеек
+     * Переопределяет метод {@link DefaultTableModel#isCellEditable(int, int)} для запрета на редактирование ячеек
      *
      * @param columns - массив строк, состоящий из заголовков таблицы
      * @param x       - расположение таблицы по горизонтали
@@ -56,7 +57,7 @@ public class IntegrationTable extends JScrollPane {
 
     /**
      * Метод создания таблицы
-     * Переопределяется метод {@link JTable#prepareRenderer(TableCellRenderer,int,int) для раскрашивания строк
+     * Переопределяется метод {@link JTable#prepareRenderer(TableCellRenderer, int, int) для раскрашивания строк
      * с чередованием
      * Переопределяется метод {@link JTable#isCellEditable(int, int)}
      * @param columns - заголовки таблицы
@@ -99,7 +100,7 @@ public class IntegrationTable extends JScrollPane {
      * Метод инициализации таблицы
      * @param x - расположение таблицы по горизонтали
      * @param y - расположение таблицы по вертикали
-     * @see IntegrationTable#IntegrationTable(String[],int,int, LabPanel)
+     * @see IntegrationTable#IntegrationTable(String[], int, int, LabPanel)
      */
     private void initTable(int x, int y, LabPanel parentPanel) {
         table = (JTable) this.getViewport().getView();
@@ -110,7 +111,7 @@ public class IntegrationTable extends JScrollPane {
         table.setCellSelectionEnabled(false);
         table.setRowSelectionAllowed(true);
         table.setColumnSelectionAllowed(false);
-        this.setBounds(x,y,400,400);
+        this.setBounds(x,y,600,400);
 
         table.setFont(new Font("Arial", Font.PLAIN, 14));
         table.setForeground(Color.DARK_GRAY);
@@ -150,19 +151,27 @@ public class IntegrationTable extends JScrollPane {
 
                     TableModel model = (TableModel)e.getSource();
                     Object newValue = model.getValueAt(row, column);
-
-                    switch (column) {
-                        case 0:
-                            tableRows.get(row).setLowBorder(newValue.toString());
-                            break;
-                        case 1:
-                            tableRows.get(row).setHighBorder(newValue.toString());
-                            break;
-                        case 2:
-                            tableRows.get(row).setStepIntegration(newValue.toString());
-                        default:
-                            break;
+                    try {
+                        if (Double.parseDouble(newValue.toString()) < MIN_VALUE ||
+                                Double.parseDouble(newValue.toString()) > MAX_VALUE) {
+                            throw new OutOfRangeException(Double.parseDouble(newValue.toString()));
+                        }
                     }
+                    catch (OutOfRangeException ev){
+                        parentPanel.isValueOutOfRange();
+                    }
+                        switch (column) {
+                            case 0:
+                                tableRows.get(row).setLowBorder(newValue.toString());
+                                break;
+                            case 1:
+                                tableRows.get(row).setHighBorder(newValue.toString());
+                                break;
+                            case 2:
+                                tableRows.get(row).setStepIntegration(newValue.toString());
+                            default:
+                                break;
+                        }
                 }
             }
         });
@@ -190,8 +199,21 @@ public class IntegrationTable extends JScrollPane {
                 parentPanel.isLessThanZeroOrEqualToZero();
                 return;
             }
+            if (bottomBorder < MIN_VALUE || bottomBorder > MAX_VALUE) {
+                throw new OutOfRangeException(bottomBorder);
+            }
+            if (topBorder > MAX_VALUE) {
+                throw new OutOfRangeException(topBorder);
+            }
+            if (stepIntegration < MIN_VALUE || stepIntegration > MAX_VALUE) {
+                throw new OutOfRangeException(stepIntegration);
+            }
         } catch (NumberFormatException e) {
             parentPanel.isSomethingGoWrong();
+            return;
+        } catch (OutOfRangeException e) {
+            parentPanel.isValueOutOfRange();
+            return;
         }
 
 
@@ -201,7 +223,9 @@ public class IntegrationTable extends JScrollPane {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(newData);
+
         tableRows.add(new RecIntegral(newData[0],newData[1],newData[2], ""));
+        parentPanel.isAddNewRowSuccess();
     }
 
     /**
@@ -247,6 +271,7 @@ public class IntegrationTable extends JScrollPane {
     public void clearTable() {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.getDataVector().removeAllElements();
+        table.setBackground(new Color(238,238,238));
     }
 
     /**
@@ -298,7 +323,7 @@ public class IntegrationTable extends JScrollPane {
      * @param lowBorder  - нижняя граница интегрирования
      * @param highBorder - верхняя граница интегрирования
      * @param step       - шаг интегрирования
-     * @return String       - результат интегрирования
+     * @return String    - результат интегрирования
      */
     public String integrationResultTrap(double lowBorder, double highBorder, double step) {
         double sum = 0.0;

@@ -5,7 +5,7 @@ package rcpa.labs.model;
  * @author Danila Kokarev
  *
  * Класс, представляющий запись в таблице
- * Содержит данные для одной строки таблицы
+ * Содержит данные для одной строки таблицы IntegrationTable
  */
 public class RecIntegral {
 
@@ -54,20 +54,24 @@ public class RecIntegral {
         return new String[]{lowBorder, highBorder, stepIntegration, result};
     }
 
+
+    /**
+     * Геттер и сеттеры
+     */
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+
     public String getLowBorder() {
         return lowBorder;
     }
 
     public void setLowBorder(String lowBorder) {
         this.lowBorder = lowBorder;
-    }
-
-    public String getStepIntegration() {
-        return stepIntegration;
-    }
-
-    public void setStepIntegration(String stepIntegration) {
-        this.stepIntegration = stepIntegration;
     }
 
     public String getHighBorder() {
@@ -78,11 +82,11 @@ public class RecIntegral {
         this.highBorder = highBorder;
     }
 
-    public String getResult() {
-        return result;
+    public String getStepIntegration() {
+        return stepIntegration;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setStepIntegration(String stepIntegration) {
+        this.stepIntegration = stepIntegration;
     }
 }

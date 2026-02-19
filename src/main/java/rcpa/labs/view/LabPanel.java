@@ -240,6 +240,12 @@ public class LabPanel extends JPanel implements ActionListener {
     }
 
     /**
+     * Метод включения флага "Значение вышло за диапазон допустимых значений"
+     */
+    public void isValueOutOfRange() { labMaster.isValueOutOfRange=true; }
+
+
+    /**
      * Метод для отрисовки панели
      * @param g - the Graphics context in which to paint
      */

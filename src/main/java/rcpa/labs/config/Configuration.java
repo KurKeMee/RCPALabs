@@ -5,7 +5,7 @@ import javax.print.DocFlavor;
 public interface Configuration {
 
     String LAB_NAME = "Lab1 Monin Kokarev";
-    int LAB_WIDTH = 800;
+    int LAB_WIDTH = 1000;
     int LAB_HEIGHT = 600;
 
     // Таблица
@@ -21,16 +21,16 @@ public interface Configuration {
     int FIELD_SPACING = 80;
 
     // Кнопки
-    int BUTTON_WIDTH = 150;
+    int BUTTON_WIDTH = 200;
     int BUTTON_HEIGHT = 30;
 
     int ADD_BUTTON_POSITION_X = 30;
     int ADD_BUTTON_POSITION_Y = 270;
     int CALCULATE_BUTTON_POSITION_X = 330;
     int CALCULATE_BUTTON_POSITION_Y = 450;
-    int CALCULATE_TRAP_BUTTON_POSITION_X = 530;
+    int CALCULATE_TRAP_BUTTON_POSITION_X = 580;
     int CALCULATE_TRAP_BUTTON_POSITION_Y = 450;
-    int DELETE_BUTTON_POSITION_X = 530;
+    int DELETE_BUTTON_POSITION_X = 580;
     int DELETE_BUTTON_POSITION_Y = 500;
     int CLEAR_BUTTON_POSITION_X = 30;
     int CLEAR_BUTTON_POSITION_Y = 320;
@@ -48,7 +48,7 @@ public interface Configuration {
     // Прямоугольник с ошибками
     int RECT_X = 190;
     int RECT_Y = 500;
-    int RECT_WIDTH = 300;
+    int RECT_WIDTH = 400;
     int RECT_HEIGHT = 30;
 
     //Тексты ошибок
@@ -63,6 +63,11 @@ public interface Configuration {
     String ADD_NEW_ROW_SUCCESS = "Строка успешно добавлена";
     String DELETE_ROW_SUCCESS = "Строка успешно удалена";
     String CALCULATE_ROW_SUCCESS = "Значение успешно вычислено";
+    String VALUE_OUT_OF_RANGE = "Значение выходит за пределы допустимых значений";
+
+    // Пороговые значения
+    double MIN_VALUE = 0.000001;
+    double MAX_VALUE = 1000000;
 
     //Анимация
     int MILLISECONDS_PER_FRAME = 40;

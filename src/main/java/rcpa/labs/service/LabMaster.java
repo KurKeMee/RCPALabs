@@ -26,6 +26,7 @@ public class LabMaster {
     public boolean isAddNewRowSuccess = false;
     public boolean isDeleteRowSuccess = false;
     public boolean isCalculateRowSuccess = false;
+    public boolean isValueOutOfRange = false;
 
     /**
      * Переменная для хранения экземпляра класса LabMaster
@@ -132,6 +133,7 @@ public class LabMaster {
             isAddNewRowSuccess = false;
             isDeleteRowSuccess = false;
             isCalculateRowSuccess = false;
+            isValueOutOfRange = false;
         }
     }
 
@@ -140,38 +142,30 @@ public class LabMaster {
      * @param graphics - графика
      */
     private void checkLogMessage(Graphics graphics){
-        if(isFieldEmpty){
-            showLogMessage(graphics,FIELDS_EMPTY,Color.red);
-        }
-        else if(isTopSmallerBottom){
-            showLogMessage(graphics,TOP_BIGGER_BOTTOM,Color.red);
-        }
-        else if(isSomethingGoWrong){
-            showLogMessage(graphics,SOMETHING_GO_WRONG,Color.red);
-        }
-        else if(isRowNoSelected){
-            showLogMessage(graphics,ROW_NO_SELECTED,Color.red);
-        }
-        else if(isBottomBorderEmpty){
-            showLogMessage(graphics,BOTTOM_BORDER_EMPTY,Color.orange);
-        }
-        else if(isTopBorderEmpty){
-            showLogMessage(graphics,TOP_BORDER_EMPTY,Color.orange);
-        }
-        else if(isStepFieldEmpty){
-            showLogMessage(graphics,STEP_FIELD_EMPTY,Color.orange);
-        }
-        else if (isLessThanZeroOrEqualToZero) {
+        if (isFieldEmpty) {
+            showLogMessage(graphics, FIELDS_EMPTY, Color.red);
+        } else if (isTopSmallerBottom) {
+            showLogMessage(graphics, TOP_BIGGER_BOTTOM, Color.red);
+        } else if (isSomethingGoWrong) {
+            showLogMessage(graphics, SOMETHING_GO_WRONG, Color.red);
+        } else if (isRowNoSelected) {
+            showLogMessage(graphics, ROW_NO_SELECTED, Color.red);
+        } else if (isBottomBorderEmpty) {
+            showLogMessage(graphics, BOTTOM_BORDER_EMPTY, Color.orange);
+        } else if (isTopBorderEmpty) {
+            showLogMessage(graphics, TOP_BORDER_EMPTY, Color.orange);
+        } else if (isStepFieldEmpty) {
+            showLogMessage(graphics, STEP_FIELD_EMPTY, Color.orange);
+        } else if (isLessThanZeroOrEqualToZero) {
             showLogMessage(graphics, LESS_THAN_ZERO_OR_EQUAL_TO_ZERO, Color.orange);
-        }
-        else if(isAddNewRowSuccess){
-            showLogMessage(graphics,ADD_NEW_ROW_SUCCESS,Color.green);
-        }
-        else if(isCalculateRowSuccess){
-            showLogMessage(graphics,CALCULATE_ROW_SUCCESS,Color.green);
-        }
-        else if(isDeleteRowSuccess){
-            showLogMessage(graphics,DELETE_ROW_SUCCESS,Color.green);
+        } else if (isAddNewRowSuccess) {
+            showLogMessage(graphics, ADD_NEW_ROW_SUCCESS, Color.green);
+        } else if (isCalculateRowSuccess) {
+            showLogMessage(graphics, CALCULATE_ROW_SUCCESS, Color.green);
+        } else if (isDeleteRowSuccess) {
+            showLogMessage(graphics, DELETE_ROW_SUCCESS, Color.green);
+        } else if (isValueOutOfRange) {
+            showLogMessage(graphics, VALUE_OUT_OF_RANGE, Color.red);
         }
     }
 
