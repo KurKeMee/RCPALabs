@@ -6,12 +6,13 @@ import rcpa.labs.model.ButtonData;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки вычисления
+ * Класс кнопки очистки
  * Наследуется от Button {@link Button}
  */
 public class ClearTableButton extends Button {
@@ -29,17 +30,19 @@ public class ClearTableButton extends Button {
 
     /**
      * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
-     * При нажатии происходит вычисление результата интегрирования в выбранной строке
-     * @see IntegrationTable#countResult(boolean, LabPanel)
+     * При нажатии происходит очистка таблицы и скрытие кнопок вычисления
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
-                getButtonData().getLinkedTable().clearTable();
-                getButtonData().getParentPanel().isCalculateRowSuccess();
-            }
-            else{
-                getButtonData().getParentPanel().isRowNoSelected();
+            getButtonData().getLinkedTable().clearTable();
+
+            Component[] components = getButtonData().getParentPanel().getComponents();
+            for (Component comp : components) {
+                if (comp instanceof DeleteButton ||
+                        comp instanceof CalculateButton ||
+                        comp instanceof CalculateTrapButton) {
+                    ((Button) comp).buttonVisible(false);
+                }
             }
         });
     }

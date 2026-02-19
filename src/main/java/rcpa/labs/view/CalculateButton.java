@@ -11,8 +11,9 @@ import java.awt.*;
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки вычисления
+ * Класс кнопки вычисления интеграла методом прямоугольников
  * Наследуется от Button {@link Button}
+ * При нажатии вычисляет интеграл для выбранной строки таблицы методом левых прямоугольников
  */
 public class CalculateButton extends Button {
 

@@ -11,8 +11,9 @@ import java.awt.*;
  * @author Ivan Monin
  * @author Danila Kokarev
  *
- * Класс кнопки вычисления
+ * Класс кнопки заполнения
  * Наследуется от Button {@link Button}
+ * При нажатии восстанавливает данные таблицы из сохраненного состояния
  */
 public class FillTableButton extends Button {
 
@@ -29,18 +30,12 @@ public class FillTableButton extends Button {
 
     /**
      * Метод назначения действия кнопки {@link JButton#addActionListener(java.awt.event.ActionListener)}
-     * При нажатии происходит вычисление результата интегрирования в выбранной строке
-     * @see IntegrationTable#countResult(boolean, LabPanel)
+     * При нажатии происходит заполнение таблицы данными из массива tableRows
+     * @see IntegrationTable#fillTable()
      */
     private void addEventListener() {
         this.addActionListener(e->{
-            if(getButtonData().getLinkedTable().getTableSelectedRow()!=-1) {
                 getButtonData().getLinkedTable().fillTable();
-                getButtonData().getParentPanel().isCalculateRowSuccess();
-            }
-            else{
-                getButtonData().getParentPanel().isRowNoSelected();
-            }
         });
     }
 
