@@ -2,8 +2,11 @@ package rcpa.labs;
 
 import rcpa.labs.config.Configuration;
 import rcpa.labs.view.LabPanel;
+import rcpa.labs.model.Button;
 
 import javax.swing.*;
+import java.util.Comparator;
+import java.util.TreeSet;
 
 /**
  * @author Ivan Monin

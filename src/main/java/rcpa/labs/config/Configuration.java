@@ -48,7 +48,7 @@ public interface Configuration {
     // Прямоугольник с ошибками
     int RECT_X = 190;
     int RECT_Y = 500;
-    int RECT_WIDTH = 300;
+    int RECT_WIDTH = 400;
     int RECT_HEIGHT = 30;
 
     //Тексты ошибок
@@ -63,6 +63,11 @@ public interface Configuration {
     String ADD_NEW_ROW_SUCCESS = "Строка успешно добавлена";
     String DELETE_ROW_SUCCESS = "Строка успешно удалена";
     String CALCULATE_ROW_SUCCESS = "Значение успешно вычислено";
+    String VALUE_OUT_OF_RANGE = "Значение выходит за пределы допустимых значений";
+
+    // Пороговые значения
+    double MIN_VALUE = 0.000001;
+    double MAX_VALUE = 1000000;
 
     //Анимация
     int MILLISECONDS_PER_FRAME = 40;
