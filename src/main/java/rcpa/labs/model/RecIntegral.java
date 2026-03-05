@@ -1,5 +1,7 @@
 package rcpa.labs.model;
 
+import java.io.Serializable;
+
 /**
  * @author Ivan Monin
  * @author Danila Kokarev
@@ -7,7 +9,8 @@ package rcpa.labs.model;
  * Класс, представляющий запись в таблице
  * Содержит данные для одной строки таблицы IntegrationTable
  */
-public class RecIntegral {
+public class RecIntegral implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Нижняя граница интегрирования
@@ -54,6 +57,11 @@ public class RecIntegral {
         return new String[]{lowBorder, highBorder, stepIntegration, result};
     }
 
+    /**
+     * Метод преобразования записи в строку
+     * @return String - строка данных
+     */
+    public String getString(){return lowBorder + ":" + highBorder + ":" + stepIntegration + ":" + result;};
 
     /**
      * Геттер и сеттеры

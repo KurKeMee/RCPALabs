@@ -5,6 +5,7 @@ import rcpa.labs.view.*;
 import javax.swing.*;
 import java.util.function.Supplier;
 
+
 /**
  * @author Ivan Monin
  * @author Danila Kokarev
@@ -17,7 +18,11 @@ public enum ButtonType{
     CALCULATE_BUTTON(CalculateButton::new),
     CALCULATE_TRAP_BUTTON(CalculateTrapButton::new),
     CLEAR_TABLE_BUTTON(ClearTableButton::new),
-    FILL_TABLE_BUTTON(FillTableButton::new);
+    FILL_TABLE_BUTTON(FillTableButton::new),
+    SAVE_TEXT_BUTTON(() -> new FileButton(FileButton.FileOperation.SAVE_TEXT)),
+    LOAD_TEXT_BUTTON(() -> new FileButton(FileButton.FileOperation.LOAD_TEXT)),
+    SAVE_BINARY_BUTTON(() -> new FileButton(FileButton.FileOperation.SAVE_BINARY)),
+    LOAD_BINARY_BUTTON(() -> new FileButton(FileButton.FileOperation.LOAD_BINARY));
 
     /**
      * Переменная для хранения Supplier {@link Supplier}
