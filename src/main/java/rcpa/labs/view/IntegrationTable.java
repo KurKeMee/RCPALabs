@@ -12,6 +12,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import java.awt.*;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EventObject;
@@ -25,7 +29,7 @@ import static rcpa.labs.config.Configuration.*;
  * Класс реализации таблицы интеграции
  * Наследуется от JScrollPane {@link JScrollPane}
  */
-public class IntegrationTable extends JScrollPane {
+public class IntegrationTable extends JScrollPane implements Externalizable {
 
     /**
      * Переменная для хранения созданной таблицы
@@ -224,7 +228,7 @@ public class IntegrationTable extends JScrollPane {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(newData);
 
-        tableRows.add(new RecIntegral(newData[0],newData[1],newData[2], (newData.length==4)?newData[3]:""));
+        tableRows.add(new RecIntegral(newData[0],newData[1],newData[2], (newData.length>3)?newData[3]:""));
         parentPanel.isAddNewRowSuccess();
     }
 
@@ -367,5 +371,15 @@ public class IntegrationTable extends JScrollPane {
      */
     public void setTableRows(ArrayList<RecIntegral> tableRows) {
         this.tableRows = tableRows;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        out.writeObject(this.tableRows);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        this.tableRows = (ArrayList<RecIntegral>) in.readObject();
     }
 }

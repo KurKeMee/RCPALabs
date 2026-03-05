@@ -153,7 +153,7 @@ public class FileButton extends Button {
             }
 
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-                oos.writeObject(linkedTable.getTableRows());
+                linkedTable.writeExternal(oos);
 
                 JOptionPane.showMessageDialog(this,
                         "Данные успешно сохранены в бинарный файл:\n" + file.getName(),
@@ -182,9 +182,8 @@ public class FileButton extends Button {
                 linkedTable.clearTable();
                 linkedTable.setTableRows(new ArrayList<>());
 
-                ((ArrayList<RecIntegral>) ois.readObject()).forEach(r->{
-                    linkedTable.addRow(r.getStringArray(),this.getButtonData().getParentPanel());
-                });
+                linkedTable.readExternal(ois);
+                linkedTable.fillTable();
 
                 JOptionPane.showMessageDialog(this,
                         "Данные успешно загружены из бинарного файла:\n" + file.getName(),
