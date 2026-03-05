@@ -1,6 +1,8 @@
 package rcpa.labs.model;
 
-import java.io.Serializable;
+import java.io.*;
+import java.nio.channels.SeekableByteChannel;
+import java.util.ArrayList;
 
 /**
  * @author Ivan Monin
