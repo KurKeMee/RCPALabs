@@ -5,7 +5,7 @@ import javax.print.DocFlavor;
 public interface Configuration {
 
     String LAB_NAME = "Lab1 Monin Kokarev";
-    int LAB_WIDTH = 1000;
+    int LAB_WIDTH = 1300;
     int LAB_HEIGHT = 600;
 
     // Таблица
@@ -34,6 +34,14 @@ public interface Configuration {
     int DELETE_BUTTON_POSITION_Y = 500;
     int CLEAR_BUTTON_POSITION_X = 30;
     int CLEAR_BUTTON_POSITION_Y = 320;
+    int SAVE_TEXT_BUTTON_POSITION_X=1000;
+    int SAVE_TEXT_BUTTON_POSITION_Y=30;
+    int LOAD_TEXT_BUTTON_POSITION_X=1000;
+    int LOAD_TEXT_BUTTON_POSITION_Y=90;
+    int SAVE_BINARY_BUTTON_POSITION_X=1000;
+    int SAVE_BINARY_BUTTON_POSITION_Y=150;
+    int LOAD_BINARY_BUTTON_POSITION_X=1000;
+    int LOAD_BINARY_BUTTON_POSITION_Y=210;
     int FILL_BUTTON_POSITION_X = 30;
     int FILL_BUTTON_POSITION_Y = 370;
 

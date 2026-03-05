@@ -183,7 +183,7 @@ public class IntegrationTable extends JScrollPane {
      * @see IntegrationTable#integrationResult(double, double, double) - вычисляет значение интеграла
      */
     public void addRow(String[] data, LabPanel parentPanel){
-        if(this.table.getColumnCount() != data.length+1){
+        if(this.table.getColumnCount() < data.length){
             parentPanel.isSomethingGoWrong();
         }
 
@@ -224,7 +224,7 @@ public class IntegrationTable extends JScrollPane {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.addRow(newData);
 
-        tableRows.add(new RecIntegral(newData[0],newData[1],newData[2], ""));
+        tableRows.add(new RecIntegral(newData[0],newData[1],newData[2], (newData.length==4)?newData[3]:""));
         parentPanel.isAddNewRowSuccess();
     }
 
