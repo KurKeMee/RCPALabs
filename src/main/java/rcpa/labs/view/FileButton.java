@@ -155,12 +155,10 @@ public class FileButton extends Button {
             try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
                 oos.writeObject(linkedTable.getTableRows());
 
-
                 JOptionPane.showMessageDialog(this,
                         "Данные успешно сохранены в бинарный файл:\n" + file.getName(),
                         "Сохранение завершено",
                         JOptionPane.INFORMATION_MESSAGE);
-
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this,
                         "Ошибка при сохранении бинарного файла:\n" + e.getMessage(),
