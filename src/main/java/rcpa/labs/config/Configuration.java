@@ -80,6 +80,8 @@ public interface Configuration {
     //Анимация
     int MILLISECONDS_PER_FRAME = 40;
 
+    //Потоки
+    int THREAD_COUNT = 5;
 
     //Номера лабораторных
     byte LAB1 = 1;

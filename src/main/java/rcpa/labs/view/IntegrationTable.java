@@ -3,6 +3,7 @@ package rcpa.labs.view;
 import rcpa.labs.exceptions.OutOfRangeException;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.RecIntegral;
+import rcpa.labs.service.IntegrationTask;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -180,7 +181,7 @@ public class IntegrationTable extends JScrollPane {
     /**
      * Метод добавления новой строки в таблицу
      * @param data - входные данные с полей ввода
-     * @see IntegrationTable#integrationResult(double, double, double) - вычисляет значение интеграла
+     * @see IntegrationTable#integrationResult(double, double, double, boolean) - вычисляет значение интеграла
      */
     public void addRow(String[] data, LabPanel parentPanel){
         if(this.table.getColumnCount() < data.length){
@@ -237,33 +238,67 @@ public class IntegrationTable extends JScrollPane {
 
         DefaultTableModel model = (DefaultTableModel) table.getModel();
 
-        try {
-            double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
-            double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
-            double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
+        new Thread(() -> {
+            try {
+                double bottomBorder = Double.parseDouble(model.getValueAt(selectedRow, 0).toString());
+                double topBorder = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
+                double stepIntegration = Double.parseDouble(model.getValueAt(selectedRow, 2).toString());
 
-            if (stepIntegration <= 0) {
-                parentPanel.isLessThanZeroOrEqualToZero();
-                return;
-            }
-            if (bottomBorder >= topBorder) {
-                parentPanel.isTopSmallerBottom();
-                return;
-            }
+                if (stepIntegration <= 0) {
+                    parentPanel.isLessThanZeroOrEqualToZero();
+                    return;
+                }
+                if (bottomBorder >= topBorder) {
+                    parentPanel.isTopSmallerBottom();
+                    return;
+                }
 
-            String result;
-            if (trap) {
-                result = integrationResultTrap(bottomBorder, topBorder, stepIntegration);
-            } else {
-                result = integrationResult(bottomBorder, topBorder, stepIntegration);
+                String result = integrationResult(bottomBorder, topBorder, stepIntegration, trap);
+
+                model.setValueAt(result, selectedRow, 3);
+                tableRows.get(selectedRow).setResult(result);
+            } catch (NumberFormatException e) {
+                parentPanel.isSomethingGoWrong();
             }
-            model.setValueAt(result, selectedRow, 3);
-            tableRows.get(selectedRow).setResult(result);
-        } catch (NumberFormatException e) {
-            parentPanel.isSomethingGoWrong();
+        }).start();
+    }
+
+    /**
+     * Метод параллельного вычисления интеграла с использованием нескольких потоков
+     * @param bottomBorder - нижняя граница
+     * @param topBorder - верхняя граница
+     * @param stepIntegration - шаг интегрирования
+     * @param useTrapMethod - true для трапеций, false для прямоугольников
+     * @return результат интегрирования
+     */
+    private String integrationResult(double bottomBorder, double topBorder, double stepIntegration,
+                                       boolean useTrapMethod) {
+        double range = topBorder - bottomBorder;
+        double segmentSize = range / THREAD_COUNT;
+
+        IntegrationTask[] tasks = new IntegrationTask[THREAD_COUNT];
+
+        for (int i = 0; i < THREAD_COUNT; i++) {
+            double segStart = bottomBorder + i * segmentSize;
+            double segEnd = (i == THREAD_COUNT - 1) ? topBorder : bottomBorder + (i + 1) * segmentSize;
+
+            tasks[i] = new IntegrationTask(segStart, segEnd, stepIntegration, useTrapMethod);
+            tasks[i].start();
         }
 
+        double totalSum = 0;
+        try {
+            for (int i = 0; i < THREAD_COUNT; i++) {
+                tasks[i].join();
+                totalSum += tasks[i].getPartialSum();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return "";
+        }
+        return Double.toString(totalSum);
     }
+
 
     /**
      * Метод очистки таблицы, удаляет все строки
@@ -295,48 +330,6 @@ public class IntegrationTable extends JScrollPane {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.removeRow(id);
         tableRows.remove(id);
-    }
-
-    /**
-     * Метод левых прямоугольников
-     *
-     * @param lowBorder  - нижняя граница интегрирования
-     * @param highBorder - верхняя граница интегрирования
-     * @param step       - шаг интегрирования
-     * @return String       - результат интегрирования
-     */
-    public String integrationResult(double lowBorder, double highBorder, double step) {
-        double sum = 0.0;
-        double x = lowBorder;
-
-        while (x < highBorder) {
-            sum += Math.exp(-x) * step;
-            x += step;
-        }
-        System.out.println(sum);
-        return Double.toString(sum);
-    }
-
-    /**
-     * Метод вычисления интеграла методом трапеции на основе входных данных
-     *
-     * @param lowBorder  - нижняя граница интегрирования
-     * @param highBorder - верхняя граница интегрирования
-     * @param step       - шаг интегрирования
-     * @return String    - результат интегрирования
-     */
-    public String integrationResultTrap(double lowBorder, double highBorder, double step) {
-        double sum = 0.0;
-        double x = lowBorder;
-
-        System.out.println(highBorder);
-        while (x < highBorder) {
-            double nextX = Math.min(x + step, highBorder);
-            sum += (nextX - x) * (Math.exp(-x) + Math.exp(-nextX)) / 2;
-            x = nextX;
-        }
-
-        return Double.toString(sum);
     }
 
     /**
