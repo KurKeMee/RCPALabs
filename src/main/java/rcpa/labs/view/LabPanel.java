@@ -120,7 +120,7 @@ public class LabPanel extends JPanel implements ActionListener {
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
             buttonRepository.addNewButton(ButtonType.LOAD_TEXT_BUTTON,
-                                        "Сохранить txt",
+                                        "Загрузить txt",
                                         LOAD_TEXT_BUTTON_POSITION_X,
                                         LOAD_TEXT_BUTTON_POSITION_Y,
                                         BUTTON_WIDTH,
@@ -132,11 +132,24 @@ public class LabPanel extends JPanel implements ActionListener {
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
             buttonRepository.addNewButton(ButtonType.LOAD_BINARY_BUTTON,
-                                        "Сохранить bin",
+                                        "Загрузить bin",
                                         LOAD_BINARY_BUTTON_POSITION_X,
                                         LOAD_BINARY_BUTTON_POSITION_Y,
                                         BUTTON_WIDTH,
                                         BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.SAVE_JSON_BUTTON,
+                                        "Сохранить json",
+                                        SAVE_JSON_BUTTON_POSITION_X,
+                                        SAVE_JSON_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+            buttonRepository.addNewButton(ButtonType.LOAD_JSON_BUTTON,
+                                        "Загрузить json",
+                                        LOAD_JSON_BUTTON_POSITION_X,
+                                        LOAD_JSON_BUTTON_POSITION_Y,
+                                        BUTTON_WIDTH,
+                                        BUTTON_HEIGHT);
+
             for (int i = 0; i < 3; i++) {
                 JTextField text = new JTextField();
                 text.setBounds(START_FIELD_POSITION_X, START_FIELD_POSITION_Y + (i * FIELD_SPACING), TEXT_WIDTH, TEXT_HEIGHT);
