@@ -22,7 +22,9 @@ public enum ButtonType{
     SAVE_TEXT_BUTTON(() -> new FileButton(FileButton.FileOperation.SAVE_TEXT)),
     LOAD_TEXT_BUTTON(() -> new FileButton(FileButton.FileOperation.LOAD_TEXT)),
     SAVE_BINARY_BUTTON(() -> new FileButton(FileButton.FileOperation.SAVE_BINARY)),
-    LOAD_BINARY_BUTTON(() -> new FileButton(FileButton.FileOperation.LOAD_BINARY));
+    LOAD_BINARY_BUTTON(() -> new FileButton(FileButton.FileOperation.LOAD_BINARY)),
+    SAVE_JSON_BUTTON(() -> new FileButton(FileButton.FileOperation.SAVE_JSON)),
+    LOAD_JSON_BUTTON(() -> new FileButton(FileButton.FileOperation.LOAD_JSON));
 
     /**
      * Переменная для хранения Supplier {@link Supplier}

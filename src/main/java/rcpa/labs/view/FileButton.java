@@ -3,6 +3,7 @@ package rcpa.labs.view;
 import rcpa.labs.model.ButtonData;
 import rcpa.labs.model.Button;
 import rcpa.labs.model.RecIntegral;
+import rcpa.labs.service.JsonSerializer;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,6 +25,8 @@ import java.util.List;
 public class FileButton extends Button {
 
     public enum FileOperation {
+        SAVE_JSON,
+        LOAD_JSON,
         SAVE_TEXT,
         LOAD_TEXT,
         SAVE_BINARY,
@@ -54,6 +57,12 @@ public class FileButton extends Button {
             fileChooser.setCurrentDirectory(new File("."));
 
             switch (operation) {
+                case SAVE_JSON:
+                    saveJsonFile(fileChooser);
+                    break;
+                case LOAD_JSON:
+                    loadJsonFile(fileChooser);
+                    break;
                 case SAVE_TEXT:
                     saveTextFile(fileChooser);
                     break;
@@ -68,6 +77,64 @@ public class FileButton extends Button {
                     break;
             }
         });
+    }
+
+    /**
+     * Сохранение в Json файл
+     */
+    private void saveJsonFile(JFileChooser fileChooser) {
+        fileChooser.setDialogTitle("Сохранить в json файл");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("JSON файлы (*.json)", "txt"));
+
+        if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            if (!file.getName().toLowerCase().endsWith(".json")) {
+                file = new File(file.getAbsolutePath() + ".json");
+            }
+
+            try {
+                JsonSerializer.toJson(linkedTable.getTableRows(),file);
+
+                JOptionPane.showMessageDialog(this,
+                        "Данные успешно сохранены в файл:\n" + file.getName(),
+                        "Сохранение завершено",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Ошибка при сохранении файла:\n" + e.getMessage(),
+                        "Ошибка",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Загрузка из Json файла
+     */
+    private void loadJsonFile(JFileChooser fileChooser) {
+        fileChooser.setDialogTitle("Загрузить из json файла");
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Json файлы (*.json)", "json"));
+
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try{
+                linkedTable.clearTable();
+                linkedTable.setTableRows(JsonSerializer.fromJson(file));
+                linkedTable.fillTable();
+                
+                JOptionPane.showMessageDialog(this,
+                        "Данные успешно загружены из файла:\n" + file.getName(),
+                        "Загрузка завершена",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Ошибка при загрузке файла:\n" + e.getMessage(),
+                        "Ошибка",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
     /**

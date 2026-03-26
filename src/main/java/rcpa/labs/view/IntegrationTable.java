@@ -280,7 +280,7 @@ public class IntegrationTable extends JScrollPane {
 
         for (int i = 0; i < THREAD_COUNT; i++) {
             double segStart = bottomBorder + i * segmentSize;
-            double segEnd = (i == THREAD_COUNT - 1) ? topBorder : bottomBorder + (i + 1) * segmentSize;
+            double segEnd = (i == THREAD_COUNT - 1) ? topBorder : bottomBorder + (i + 1) * segmentSize;// ЕСЛИ ПОСЛЕДНИЙ ПОТОК ТО ЕМУ ДАЁМ ВЕРХНЮЮ ГРАНИЦУ ИНАЧЕ НИЖНЯЯ +ШАГИ
 
             tasks[i] = new IntegrationTask(segStart, segEnd, stepIntegration, useTrapMethod);
             tasks[i].start();
@@ -351,6 +351,14 @@ public class IntegrationTable extends JScrollPane {
      * @return ArrayList<RecIntegral> - список записей
      */
     public ArrayList<RecIntegral> getTableRows() {
+        return tableRows;
+    }
+
+    /**
+     * Метод получения списка записей таблицы
+     * @return ArrayList<RecIntegral> - список записей
+     */
+    public ArrayList<RecIntegral> getTableRowsObjects() {
         return tableRows;
     }
 
